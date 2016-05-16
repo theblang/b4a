@@ -3,6 +3,7 @@ import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/ro
 import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './accounts.component';
 import { AccountService } from './account.service';
+import * as _ from 'underscore';
 
 @Component({
     selector: 'b4a',
@@ -27,8 +28,14 @@ import { AccountService } from './account.service';
 
 export class AppComponent implements OnInit {
     title = 'Budget 4 All'
+    test = 0;
     
-    constructor(private router: Router) {}
+    constructor(private router: Router) {
+        _(5).times((n) => {
+            this.test += n;
+            console.log(n);
+        });
+    }
     
     ngOnInit() {
         this.router.navigate(['/dashboard'])
