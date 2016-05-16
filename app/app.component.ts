@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
+import { AccountsComponent } from './accounts.component';
+import { AccountService } from './account.service';
 
 @Component({
     selector: 'b4a',
     templateUrl: 'app/app.component.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [
-        ROUTER_PROVIDERS
+        ROUTER_PROVIDERS,
+        AccountService
     ]
 })
 
@@ -15,6 +18,10 @@ import { DashboardComponent } from './dashboard.component';
     {
         path: '/dashboard',
         component: DashboardComponent
+    },
+    {
+        path: '/accounts',
+        component: AccountsComponent
     }
 ])
 
