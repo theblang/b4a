@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './accounts.component';
 import { AccountService } from './account.service';
 import * as _ from 'underscore';
+import * as lf from 'lf';
 
 @Component({
     selector: 'b4a',
