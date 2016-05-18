@@ -1,7 +1,10 @@
 <div>
     <h2>Accounts</h2>
     
+    <input type="text" #name>
+    <button (click)="addAccount(name.value)">Add</button>
+    
     <ul>
-        <li *ngFor='let account of accounts'>{{account.name}}</li>
+        <li *ngFor='let account of accounts | async'>{{account.name}}</li>
     </ul>
 </div>

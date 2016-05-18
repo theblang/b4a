@@ -7,9 +7,9 @@ export class AccountService {
     
     constructor() {
         this.accounts = [
-            new Account(Math.random(), 'test1'),
-            new Account(Math.random(), 'test2'),
-            new Account(Math.random(), 'test3')
+            new Account('test1'),
+            new Account('test2'),
+            new Account('test3')
         ]
     }
     
