@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
-import { Account } from './account'
+import { FirebaseListObservable } from 'angularfire2';
 import { AccountService } from './account.service'
-import { AngularFire, FirebaseListObservable } from 'angularfire2'
+import { Account } from './account'
 
 @Component({
     selector: 'accounts',
@@ -10,20 +9,11 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2'
 })
 
 export class AccountsComponent {
-    accounts: FirebaseListObservable<Account[]>;
+    public accounts: FirebaseListObservable<Account[]>;
 
-    constructor(
-        private _angularFire: AngularFire,
-        private _router: Router,
-        private _accountService: AccountService) {
-        
-        this.accounts = _angularFire.database.list('/accounts');        
+    constructor(private accountService: AccountService) {
+        this.accounts = this.accountService.getAccounts();
     }
 
     ngOnInit() {}
-    
-    addAccount(name: string) {
-        console.log(name);
-        this.accounts.push(new Account(name));
-    }
 }
