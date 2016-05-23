@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { AccountsComponent } from './accounts.component.ts';
-import { AccountService } from './account.service.ts';
+import { AccountsComponent } from './accounts.component';
+import { AccountService } from './account.service';
 import * as _ from 'underscore';
 import * as lf from 'lf';
 

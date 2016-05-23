@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
-import { Account } from './account'
-import { AccountService } from './account.service.ts'
-import { AngularFire, FirebaseListObservable } from 'angularfire2'
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Account } from './account';
+import { AccountService } from './account.service';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Component({
     selector: 'budget',

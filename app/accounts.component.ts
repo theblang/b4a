@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
 import { FirebaseListObservable } from 'angularfire2';
-import { AccountService } from './account.service.ts'
-import { Account } from './'
+import { AccountService } from './account.service';
+import { Account } from './account';
 
 @Component({
     selector: 'accounts',
