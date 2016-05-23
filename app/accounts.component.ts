@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FirebaseListObservable } from 'angularfire2';
-import { AccountService } from './account.service'
-import { Account } from './account'
+import { AccountService } from './account.service.ts'
+import { Account } from './'
 
 @Component({
     selector: 'accounts',
@@ -11,9 +11,21 @@ import { Account } from './account'
 export class AccountsComponent {
     public accounts: FirebaseListObservable<Account[]>;
 
-    constructor(private accountService: AccountService) {
-        this.accounts = this.accountService.getAccounts();
+    constructor(private accountService: AccountService) { }
+
+    getAccounts() {
+        return this.accountService.getAccounts();
+    }
+    
+    addAccount(name: string) {
+        return this.accountService.addAccount(new Account(name));
+    }
+    
+    removeAccount(key: string) {
+        return this.accountService.removeAccount(key);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.accounts = this.getAccounts();
+     }
 }

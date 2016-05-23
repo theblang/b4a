@@ -2,12 +2,12 @@
     <h2>Accounts</h2>
     
     <input type="text" #name>
-    <button (click)="accountService.addAccount(name.value)">Add</button>
+    <button (click)="addAccount(name.value)">Add</button>
     
     <ul>
         <li *ngFor='let account of accounts | async'>
             <span>{{account.$key}}: {{account.name}}</span>
-            <button (click)="accountService.removeAccount(account.$key)">Delete</button>
+            <button (click)="removeAccount(account.$key)">Delete</button>
         </li>
     </ul>
 </div>
