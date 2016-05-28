@@ -3,6 +3,7 @@ import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/ro
 import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './accounts.component';
 import { AccountService } from './account.service';
+import { BudgetsComponent } from './budgets.component';
 import * as _ from 'underscore';
 import * as lf from 'lf';
 
@@ -24,6 +25,10 @@ import * as lf from 'lf';
     {
         path: '/accounts',
         component: AccountsComponent
+    },
+    {
+        path: '/budgets',
+        component: BudgetsComponent
     }
 ])
 
@@ -39,6 +44,6 @@ export class AppComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.router.navigate(['/accounts'])
+        this.router.navigate(['/budgets'])
     }
 }

@@ -1,0 +1,8 @@
+<div>
+    <h2>Budgets</h2>
+    
+    <input type="text" #name>
+    <button (click)="addBudget(name.value)">Add</button>
+    
+    <budget *ngFor="let budget of budgets | async" [budget]="budget"></budget>
+</div>

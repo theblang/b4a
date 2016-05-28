@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Account } from './account';
 import { AccountService } from './account.service';
+import { BudgetComponent } from './budget.component';
 import { Budget } from './budget';
 
 @Component({
-    selector: 'budget',
-    templateUrl: 'app/budget.component.html'
+    selector: 'budgets',
+    templateUrl: 'app/budgets.component.html',
+    directives: [BudgetComponent]
 })
 
-export class BudgetComponent {
-    @Input() budget: Budget;
+export class BudgetsComponent {
     
     constructor() { }
-    
     ngOnInit() { }
 }
