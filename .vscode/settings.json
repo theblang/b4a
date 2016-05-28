@@ -7,7 +7,10 @@
         "**/.idea": true,
         "**/.vscode": true,
         
-        "**/*.js": {"when": "$(basename).ts"},
-        "**/*.map": {"when": "$(basename).map"}
+        "app/**/*.js": true,
+        "app/**/*.map": true   
+                     
+        // "**/*.js": {"when": "$(basename).ts"},
+        // "**/*.map": {"when": "$(basename).map"}
     }
 }

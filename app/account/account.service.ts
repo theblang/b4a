@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable }     from 'rxjs/Observable';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { Account } from './account';
-import { AppSettings } from './app.settings';
+import { Account } from './account.model';
 
 @Injectable()
 export class AccountService {

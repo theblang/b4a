@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { AccountsComponent } from './accounts.component';
-import { AccountService } from './account.service';
-import { BudgetsComponent } from './budgets.component';
+import { AccountsComponent } from './account/accounts.component';
+import { AccountService } from './account/account.service';
+import { BudgetsComponent } from './budget/budgets.component';
 import * as _ from 'underscore';
 import * as lf from 'lf';
 

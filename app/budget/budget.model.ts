@@ -1,4 +1,4 @@
-import { Category } from './category';
+import { Category } from './category.model';
 
 export class Budget {
     public name: string;

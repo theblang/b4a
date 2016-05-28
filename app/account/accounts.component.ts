@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FirebaseListObservable } from 'angularfire2';
 import { AccountService } from './account.service';
-import { Account } from './account';
+import { Account } from './account.model';
 
 @Component({
     selector: 'accounts',
-    templateUrl: 'app/accounts.component.html'
+    templateUrl: 'app/account/accounts.component.html'
 })
 
 export class AccountsComponent {
