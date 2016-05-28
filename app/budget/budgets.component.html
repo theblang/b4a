@@ -4,5 +4,5 @@
     <input type="text" #name>
     <button (click)="addBudget(name.value)">Add</button>
     
-    <budget *ngFor="let budget of budgets | async" [budget]="budget"></budget>
+    <budget *ngFor="let budget of budgets | async; let i = index" [budget-id]="budget.$key"></budget>
 </div>

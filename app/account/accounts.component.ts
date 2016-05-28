@@ -12,6 +12,9 @@ export class AccountsComponent {
     public accounts: FirebaseListObservable<Account[]>;
 
     constructor(private accountService: AccountService) { }
+    ngOnInit() {
+        this.accounts = this.getAccounts();
+    }
 
     getAccounts() {
         return this.accountService.getAccounts();
@@ -24,8 +27,4 @@ export class AccountsComponent {
     removeAccount(key: string) {
         return this.accountService.removeAccount(key);
     }
-
-    ngOnInit() {
-        this.accounts = this.getAccounts();
-     }
 }

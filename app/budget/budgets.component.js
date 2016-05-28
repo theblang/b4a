@@ -10,17 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var budget_component_1 = require('./budget.component');
+var budget_service_1 = require('./budget.service');
+var budget_model_1 = require('./budget.model');
 var BudgetsComponent = (function () {
-    function BudgetsComponent() {
+    function BudgetsComponent(budgetsService) {
+        this.budgetsService = budgetsService;
     }
-    BudgetsComponent.prototype.ngOnInit = function () { };
+    BudgetsComponent.prototype.ngOnInit = function () {
+        this.budgets = this.getBudgets();
+    };
+    BudgetsComponent.prototype.getBudgets = function () {
+        return this.budgetsService.getBudgets();
+    };
+    BudgetsComponent.prototype.addBudget = function () {
+        return this.budgetsService.addBudget(new budget_model_1.Budget(name));
+    };
     BudgetsComponent = __decorate([
         core_1.Component({
             selector: 'budgets',
             templateUrl: 'app/budget/budgets.component.html',
             directives: [budget_component_1.BudgetComponent]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [budget_service_1.BudgetService])
     ], BudgetsComponent);
     return BudgetsComponent;
 }());

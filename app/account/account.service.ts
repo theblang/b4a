@@ -4,17 +4,21 @@ import { Account } from './account.model';
 
 @Injectable()
 export class AccountService {
-    constructor(private angularFire: AngularFire) { }
+    private list: FirebaseListObservable<Account[]>;
+    
+    constructor(private angularFire: AngularFire) { 
+        this.list = angularFire.database.list('/accounts');
+    }
 
     getAccounts(): FirebaseListObservable<Account[]> {
-        return this.angularFire.database.list('/accounts');
+        return this.list;
     }
 
     addAccount(account: Account): FirebaseWithPromise<void> {
-        return this.angularFire.database.list('/accounts').push(account);
+        return this.list.push(account);
     }
 
     removeAccount(key: string): Promise<void> {
-        return this.angularFire.database.list('/accounts').remove(key);
+        return this.list.remove(key);
     }
 }

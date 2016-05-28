@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AngularFire, FirebaseObjectObservable } from 'angularFire2';
 import { Budget } from './budget.model';
 
 @Component({
@@ -7,9 +8,12 @@ import { Budget } from './budget.model';
 })
 
 export class BudgetComponent {
-    @Input() budget: Budget;
+    @Input() budgetId: string;
+    private budget: FirebaseObjectObservable<Budget>;
     
-    constructor() { }
+    constructor(private angularFire: AngularFire) { }
     
-    ngOnInit() { }
+    ngOnInit() { 
+        this.budget = this.angularFire.database.object('/budgets/' + this.budgetId);
+    }
 }

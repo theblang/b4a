@@ -15,6 +15,9 @@ var AccountsComponent = (function () {
     function AccountsComponent(accountService) {
         this.accountService = accountService;
     }
+    AccountsComponent.prototype.ngOnInit = function () {
+        this.accounts = this.getAccounts();
+    };
     AccountsComponent.prototype.getAccounts = function () {
         return this.accountService.getAccounts();
     };
@@ -23,9 +26,6 @@ var AccountsComponent = (function () {
     };
     AccountsComponent.prototype.removeAccount = function (key) {
         return this.accountService.removeAccount(key);
-    };
-    AccountsComponent.prototype.ngOnInit = function () {
-        this.accounts = this.getAccounts();
     };
     AccountsComponent = __decorate([
         core_1.Component({

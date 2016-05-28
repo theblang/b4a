@@ -9,21 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var budget_model_1 = require('./budget.model');
+var angularFire2_1 = require('angularFire2');
 var BudgetComponent = (function () {
-    function BudgetComponent() {
+    function BudgetComponent(angularFire) {
+        this.angularFire = angularFire;
     }
-    BudgetComponent.prototype.ngOnInit = function () { };
+    BudgetComponent.prototype.ngOnInit = function () {
+        this.budget = this.angularFire.database.object('/budgets/' + this.budgetId);
+    };
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', budget_model_1.Budget)
-    ], BudgetComponent.prototype, "budget", void 0);
+        __metadata('design:type', String)
+    ], BudgetComponent.prototype, "budgetId", void 0);
     BudgetComponent = __decorate([
         core_1.Component({
             selector: 'budget',
             templateUrl: 'app/budget/budget.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [angularFire2_1.AngularFire])
     ], BudgetComponent);
     return BudgetComponent;
 }());

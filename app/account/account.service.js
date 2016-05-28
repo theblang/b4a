@@ -13,15 +13,16 @@ var angularfire2_1 = require('angularfire2');
 var AccountService = (function () {
     function AccountService(angularFire) {
         this.angularFire = angularFire;
+        this.list = angularFire.database.list('/accounts');
     }
     AccountService.prototype.getAccounts = function () {
-        return this.angularFire.database.list('/accounts');
+        return this.list;
     };
     AccountService.prototype.addAccount = function (account) {
-        return this.angularFire.database.list('/accounts').push(account);
+        return this.list.push(account);
     };
     AccountService.prototype.removeAccount = function (key) {
-        return this.angularFire.database.list('/accounts').remove(key);
+        return this.list.remove(key);
     };
     AccountService = __decorate([
         core_1.Injectable(), 
