@@ -3,6 +3,7 @@ import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/ro
 import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
 import { AccountService } from './account/account.service';
+import { BudgetService } from './budget/budget.service';
 import { BudgetsComponent } from './budget/budgets.component';
 import * as _ from 'underscore';
 import * as lf from 'lf';
@@ -13,7 +14,8 @@ import * as lf from 'lf';
     directives: [ROUTER_DIRECTIVES],
     providers: [
         ROUTER_PROVIDERS,
-        AccountService
+        AccountService,
+        BudgetService
     ]
 })
 
@@ -39,7 +41,6 @@ export class AppComponent implements OnInit {
     constructor(private router: Router) {
         _(5).times((n) => {
             this.test += n;
-            console.log(n);
         });
     }
     

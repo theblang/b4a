@@ -1,13 +1,13 @@
 <fieldset>
-    <legend>{{budget.name}}</legend>
+    <legend>{{ (budget | async).name }}</legend>
     
     <input type="text" #name>
     <button (click)="addCategory(name.value)">Add</button>
 
-    <ul>
+    <!--<ul ngIf="budget.categories">
         <li *ngFor='let category of budget.categories; let i=index'>
             <span>{{i}}: {{category.name}}</span>
             <button (click)="removeCategory(account.$key)">Delete</button>
         </li>
-    </ul>
+    </ul>-->
 </fieldset>

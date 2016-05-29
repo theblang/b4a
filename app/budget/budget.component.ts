@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AngularFire, FirebaseObjectObservable } from 'angularFire2';
+import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { Budget } from './budget.model';
 
 @Component({

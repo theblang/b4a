@@ -13,16 +13,16 @@ import { Budget } from './budget.model';
 export class BudgetsComponent {
     public budgets: FirebaseListObservable<Budget[]>;
     
-    constructor(private budgetsService: BudgetService) { }
+    constructor(private budgetService: BudgetService) { }
     ngOnInit() { 
         this.budgets = this.getBudgets();
     }
 
     getBudgets(): FirebaseListObservable<Budget[]> {
-        return this.budgetsService.getBudgets();
+        return this.budgetService.getBudgets();
     }
     
-    addBudget(): FirebaseWithPromise<void> {
-        return this.budgetsService.addBudget(new Budget(name));
+    addBudget(name: string): FirebaseWithPromise<void> {
+        return this.budgetService.addBudget(new Budget(name));
     }
 }
