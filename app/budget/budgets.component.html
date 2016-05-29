@@ -2,7 +2,7 @@
     <h2>Budgets</h2>
     
     <input type="text" #name>
-    <button (click)="addBudget(name.value)">Add</button>
+    <button (click)="addBudget(name.value)">Add Budget</button>
     
-    <budget *ngFor="let budget of budgets | async; let i = index" [budgetId]="budget.$key"></budget>
+    <budget *ngFor="let budgetJson of budgets | async; let i = index" [budgetJson]="budgetJson"></budget>
 </div>

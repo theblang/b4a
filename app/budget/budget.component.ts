@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseObjectObservable } from 'angularfire2';
 import { Budget } from './budget.model';
+import { BudgetService } from './budget.service';
+import { Category } from './category.model';
 
 @Component({
     selector: 'budget',
@@ -8,12 +10,21 @@ import { Budget } from './budget.model';
 })
 
 export class BudgetComponent {
-    @Input() budgetId: string;
-    private budget: FirebaseObjectObservable<Budget>;
+    @Input() budgetJson: JSON;
+    public budget: Budget;
     
-    constructor(private angularFire: AngularFire) { }
-    
-    ngOnInit() { 
-        this.budget = this.angularFire.database.object('/budgets/' + this.budgetId);
+    constructor(private budgetService: BudgetService) { }
+    ngOnInit() {
+        this.budget = new Budget(this.budgetJson['name'], this.budgetJson['categories'], this.budgetJson['$key']);
+    }
+
+    removeBudget($key) {
+        this.budgetService.removeBudget($key);
+    }
+
+    addCategory(budget: Budget, name: string) {
+        debugger;
+        this.budget.categories.push(new Category(name))
+        this.budgetService.updateBudget(this.budget);
     }
 }

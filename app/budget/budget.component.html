@@ -1,8 +1,12 @@
 <fieldset>
-    <legend>{{ (budget | async).name }}</legend>
+    <legend>{{ budget.name }}</legend>
+    
+    <div>
+        <button (click)="removeBudget(budget.$key)">Remove Budget</button>
+    </div>
     
     <input type="text" #name>
-    <button (click)="addCategory(name.value)">Add</button>
+    <button (click)="addCategory(budget, name.value)">Add Category</button>
 
     <!--<ul ngIf="budget.categories">
         <li *ngFor='let category of budget.categories; let i=index'>

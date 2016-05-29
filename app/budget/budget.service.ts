@@ -14,19 +14,23 @@ export class BudgetService {
         return this.list;
     }
     
-    getBudget() {
-        
+    getBudget(budgetId: string) {
+        return this.angularFire.database.object('/budgets/' + budgetId);
     }
     
     addBudget(budget: Budget): FirebaseWithPromise<void> {
+        debugger;
         return this.list.push(budget);
     }
 
-    updateBduget() {
+    updateBudget(budget: Budget) {
+        return this.list.push(budget);
     }
     
+    removeBudget($key: string): Promise<void> {
+        return this.list.remove($key);
+    }
     
-
     // updateBudget() {
     //     return this.list;
     // }
