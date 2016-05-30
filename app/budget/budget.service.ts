@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Budget } from './budget.model';
+import { Category } from './category.model';
 
 @Injectable()
 export class BudgetService {
@@ -13,37 +14,25 @@ export class BudgetService {
     getBudgets(): FirebaseListObservable<Budget[]> {
         return this.list;
     }
-    
+
     getBudget(budgetId: string) {
         return this.angularFire.database.object('/budgets/' + budgetId);
     }
-    
+
     addBudget(budget: Budget): FirebaseWithPromise<void> {
-        debugger;
-        return this.list.push(budget);
+        return this.list.push(budget.toJSON());
     }
 
     updateBudget(budget: Budget) {
-        return this.list.push(budget);
+        return this.list.update(budget.$key, budget.toJSON());
     }
-    
+
     removeBudget($key: string): Promise<void> {
-        return this.list.remove($key);
+        if ($key) {
+            return this.list.remove($key);
+        }
+        else {
+            throw Error("Must have a key to remove a budget");
+        }
     }
-    
-    // updateBudget() {
-    //     return this.list;
-    // }
-
-    // getAccounts(): FirebaseListObservable<Account[]> {
-    //     return this.angularFire.database.list('/accounts');
-    // }
-
-    // addAccount(account: Account): FirebaseWithPromise<void> {
-    //     return this.angularFire.database.list('/accounts').push(account);
-    // }
-
-    // removeAccount(key: string): Promise<void> {
-    //     return this.angularFire.database.list('/accounts').remove(key);
-    // }
 }

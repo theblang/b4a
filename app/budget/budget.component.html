@@ -6,12 +6,11 @@
     </div>
     
     <input type="text" #name>
-    <button (click)="addCategory(budget, name.value)">Add Category</button>
+    <button (click)="addCategory(name.value, budget)">Add Category</button>
 
-    <!--<ul ngIf="budget.categories">
-        <li *ngFor='let category of budget.categories; let i=index'>
+    <ul>
+        <li *ngFor='let category of budget.categories; let i = index'>
             <span>{{i}}: {{category.name}}</span>
-            <button (click)="removeCategory(account.$key)">Delete</button>
         </li>
-    </ul>-->
+    </ul>
 </fieldset>
