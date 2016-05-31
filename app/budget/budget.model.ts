@@ -8,9 +8,10 @@ export class Budget {
 
     toJSON() {
         let json = {};
-        for(var property in this) {
+        for (var property in this) {
             json[property] = this[property];
         }
+        // Firebase does't like it when 
         delete json['$key'];
         return json;
     }

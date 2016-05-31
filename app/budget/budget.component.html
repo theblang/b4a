@@ -1,16 +1,19 @@
 <fieldset>
-    <legend>{{ budget.name }}</legend>
-    
+    <legend>{{budget.name}}</legend>
+
     <div>
-        <button (click)="removeBudget(budget.$key)">Remove Budget</button>
+        <button (click)="removeBudget(budget)">Remove Budget</button>
     </div>
-    
+
     <input type="text" #name>
     <button (click)="addCategory(name.value, budget)">Add Category</button>
 
     <ul>
         <li *ngFor='let category of budget.categories; let i = index'>
             <span>{{i}}: {{category.name}}</span>
+            <input type="text" placeholder="budgeted" [(ngModel)]="category.allocated">
+            <span>Actual:</span>
+            <button (click)="saveBudget(budget)">Save</button>
         </li>
     </ul>
 </fieldset>

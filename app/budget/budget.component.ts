@@ -12,18 +12,26 @@ import { Category } from './category.model';
 export class BudgetComponent {
     @Input() budgetJson;
     public budget: Budget;
+    public hasChanges: boolean;
+    private originalBudget: Budget;
 
     constructor(private budgetService: BudgetService) { }
+
     ngOnInit() {
+        this.originalBudget = new Budget(this.budgetJson.name, this.budgetJson.categories, this.budgetJson.$key);
         this.budget = new Budget(this.budgetJson.name, this.budgetJson.categories, this.budgetJson.$key);
     }
 
-    removeBudget(key) {
-        this.budgetService.removeBudget(key);
+    removeBudget(budget: Budget) {
+        this.budgetService.removeBudget(budget.$key);
     }
 
     addCategory(name: string, budget: Budget) {
         budget.categories.push(new Category(name));
+        this.budgetService.updateBudget(budget);
+    }
+
+    saveBudget(budget: Budget) {
         this.budgetService.updateBudget(budget);
     }
 }
