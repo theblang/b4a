@@ -1,0 +1,16 @@
+<div>
+    <h2>Transactions</h2>
+    
+    <input type="number" #amount>
+    <input type="text" #payee>
+    <input type="date" #date>
+    <button (click)="addTransaction(amount.value, payee.value, date.value)">Add Transaction</button>
+    
+    <table border="1">
+        <tr *ngFor="let transactionJson of transactions | async">
+            <td>{{transactionJson.amount}}</td>
+            <td>{{transactionJson.payee}}</td>
+            <td>{{transactionJson.date}}</td>
+        </tr>
+    </table>
+</div>
