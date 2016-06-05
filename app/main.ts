@@ -9,7 +9,7 @@ import { AppSettings } from './app.settings';
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,
     FIREBASE_PROVIDERS,
-    provide(APP_BASE_HREF, { useValue: '/' }),
-    provide(LocationStrategy, {useClass: HashLocationStrategy}),
+    // provide(APP_BASE_HREF, { useValue: '/' }),
+    // provide(LocationStrategy, {useClass: HashLocationStrategy}),
     defaultFirebase(AppSettings.API_ENDPOINT)
 ]);
