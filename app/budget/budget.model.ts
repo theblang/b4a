@@ -9,11 +9,8 @@ export class Budget {
     ) { }
 
     toJSON() {
-        let json = {};
-        for (var property in this) {
-            json[property] = this[property];
-        }
-        delete json['$key'];
-        return json;
+        const copy = Object.assign({}, this);
+        delete copy['$key'];
+        return copy;
     }
 }

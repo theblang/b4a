@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
+import { Router, Routes, RouteSegment, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
+import { AccountComponent } from './account/account.component';
 import { AccountService } from './account/account.service';
 import { BudgetService } from './budget/budget.service';
 import { BudgetsComponent } from './budget/budgets.component';
@@ -32,6 +33,10 @@ import * as lf from 'lf';
         component: AccountsComponent
     },
     {
+        path: '/account/:id',
+        component: AccountComponent
+    },
+    {
         path: '/budgets',
         component: BudgetsComponent
     },
@@ -49,9 +54,11 @@ export class AppComponent implements OnInit {
         _(5).times((n) => {
             this.test += n;
         });
+        
+        this.router.navigate
     }
     
     ngOnInit() {
-        this.router.navigate(['/transactions'])
+        this.router.navigate(['/accounts'])
     }
 }

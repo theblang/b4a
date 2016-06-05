@@ -1,16 +1,32 @@
 <div>
     <h2>Transactions</h2>
     
-    <input type="number" #amount>
-    <input type="text" #payee>
-    <input type="date" #date>
-    <button (click)="addTransaction(amount.value, payee.value, date.value)">Add Transaction</button>
+    <input type="number" value="5" #amount>
+    <input type="text" value="test payee" #payee>
+    <input type="date" value="1999-01-31" #date>
+    <select #accountId>
+        <option *ngFor="let accountJson of accounts | async" value="{{accountJson.$key}}">{{accountJson.name}}</option>
+    </select>
+    <button (click)="addTransaction(amount.value, payee.value, date.value, null, null, accountId.value)">Add Transaction</button>
     
     <table border="1">
+        <tr>
+            <th>Amount</th>
+            <th>Payee</th>
+            <th>Date</th>
+            <th>Memo</th>
+            <th>Category</th>
+            <th>Account ID</th>
+        </tr>
+        
         <tr *ngFor="let transactionJson of transactions | async">
             <td>{{transactionJson.amount}}</td>
             <td>{{transactionJson.payee}}</td>
             <td>{{transactionJson.date}}</td>
+            <td>{{transactionJson.memo}}</td>
+            <td>{{transactionJson.category}}</td>
+            <td>{{transactionJson.accountId}}</td>
+            <td><button (click)="removeTransaction(transactionJson.$key)">Delete</button></td>
         </tr>
     </table>
 </div>

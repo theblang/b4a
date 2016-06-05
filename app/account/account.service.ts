@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Account } from './account.model';
 
 @Injectable()
@@ -12,6 +12,10 @@ export class AccountService {
 
     getAccounts(): FirebaseListObservable<Account[]> {
         return this.list;
+    }
+    
+    getAccount(accountId: string): FirebaseObjectObservable<Account> {
+        return this.angularFire.database.object('/accounts/' + accountId);
     }
 
     addAccount(account: Account): FirebaseWithPromise<void> {
