@@ -9,13 +9,20 @@ import { Account } from './account.model';
     templateUrl: 'app/account/account.component.html',
 })
 export class AccountComponent {
-    public account: FirebaseObjectObservable<Account>;
+    public accountObservable: FirebaseObjectObservable<Account>;
+    public account: Account;
 
     constructor(private routeSegment: RouteSegment, private accountService: AccountService) { }
 
     ngOnInit() {
         console.log(this.routeSegment.getParam('id'));
-        this.account = this.accountService.getAccount(this.routeSegment.getParam('id'));
+        this.accountObservable = this.accountService.getAccount(this.routeSegment.getParam('id'));
+
+        this.accountObservable.subscribe(accountJson => {
+            this.account = new Account(accountJson.name);
+            console.log(accountJson);
+            console.log(accountJson.name);
+        });
     }
 
     getAccounts() {
