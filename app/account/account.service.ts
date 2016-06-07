@@ -5,15 +5,15 @@ import { Account } from './account.model';
 @Injectable()
 export class AccountService {
     private list: FirebaseListObservable<Account[]>;
-    
-    constructor(private angularFire: AngularFire) { 
+
+    constructor(private angularFire: AngularFire) {
         this.list = angularFire.database.list('/accounts');
     }
 
     getAccountsObservable(): FirebaseListObservable<Account[]> {
         return this.list;
     }
-    
+
     getAccountObservable(accountId: string): FirebaseObjectObservable<Account> {
         return this.angularFire.database.object('/accounts/' + accountId);
     }
@@ -22,7 +22,12 @@ export class AccountService {
         return this.list.push(account.toJSON());
     }
 
-    removeAccount(key: string): Promise<void> {
-        return this.list.remove(key);
+    removeAccount($key: string): Promise<void> {
+        if ($key) {
+            return this.list.remove($key);
+        }
+        else {
+            throw Error("Must have a key to remove a budget");
+        }
     }
 }

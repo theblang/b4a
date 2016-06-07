@@ -17,8 +17,13 @@ export class CategoryService {
     addCategory(category: Category): FirebaseWithPromise<void> {
         return this.database.list(Category.DB_NAME).push(category.toJSON());
     }
-    
+
     removeCategory($key: string): Promise<void> {
-        return this.database.list(Category.DB_NAME).remove($key);
+        if ($key) {
+            return this.database.list(Category.DB_NAME).remove($key);
+        }
+        else {
+            throw Error("Must have a key to remove a budget");
+        }
     }
 }
