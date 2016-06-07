@@ -8,8 +8,15 @@ export class Transaction {
         public payee: string,
         public date: Date,
         public memo: string = null,
-        public category: Category = null,
-        public accountId: string = null) { }
+        public categoryId: string = null,
+        public accountId: string = null,
+        public $key: string = null) { }
+
+    toJSON() {
+        const copy = Object.assign({}, this);
+        delete copy['$key'];
+        return copy;
+    }
 
     public static parseJsonArray(transactionsJson): Transaction[] {
         let transactions: Transaction[] = [];
@@ -21,12 +28,13 @@ export class Transaction {
 
     public static parseJson(transactionJson): Transaction {
         return new Transaction(
-            transactionJson['number'],
+            transactionJson['amount'],
             transactionJson['payee'],
             transactionJson['date'],
             transactionJson['memo'],
-            transactionJson['category'],
-            transactionJson['accoundId']
+            transactionJson['categoryId'],
+            transactionJson['accountId'],
+            transactionJson['$key']
         )
     }
 }

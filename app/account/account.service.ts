@@ -27,7 +27,7 @@ export class AccountService {
             return this.list.remove($key);
         }
         else {
-            throw Error("Must have a key to remove a budget");
+            throw Error("Must have a key to remove an account");
         }
     }
 }

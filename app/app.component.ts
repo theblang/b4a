@@ -66,6 +66,6 @@ export class AppComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.router.navigate(['/categories'])
+        this.router.navigate(['/transactions'])
     }
 }

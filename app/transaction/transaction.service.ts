@@ -21,7 +21,7 @@ export class TransactionService {
     }
 
     addTransaction(transaction: Transaction) {
-        return this.database.list(Transaction.DB_NAME).push(transaction);
+        return this.database.list(Transaction.DB_NAME).push(transaction.toJSON());
     }
 
     removeTransaction($key: string) {
@@ -29,7 +29,7 @@ export class TransactionService {
             return this.database.list(Transaction.DB_NAME).remove($key);
         }
         else {
-            throw Error("Must have a key to remove a budget");
+            throw Error("Must have a key to remove a transaction");
         }
     }
 }

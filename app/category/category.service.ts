@@ -23,7 +23,7 @@ export class CategoryService {
             return this.database.list(Category.DB_NAME).remove($key);
         }
         else {
-            throw Error("Must have a key to remove a budget");
+            throw Error("Must have a key to remove a category");
         }
     }
 }
