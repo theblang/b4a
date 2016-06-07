@@ -10,8 +10,7 @@ export class TransactionService {
         this.database = this.angularFire.database;
     }
 
-    getTransactions(startAt: number = 0, endAt: number = 50): FirebaseListObservable<Transaction[]> {
-        //  return this.angularFire.database.list(Transaction.DB_NAME);
+    getTransactionsObservable(startAt: number = 0, endAt: number = 50): FirebaseListObservable<Transaction[]> {
         return this.angularFire.database.list(Transaction.DB_NAME, {
             query: {
                 limitToFirst: 50

@@ -7,7 +7,10 @@
     <select #accountId>
         <option *ngFor="let account of accounts" value="{{account.$key}}">{{account.name}}</option>
     </select>
-    <button (click)="addTransaction(amount.value, payee.value, date.value, null, null, accountId.value)">Add Transaction</button>
+    <select #categoryId>
+        <option *ngFor="let category of categories" value="{{category.$key}}">{{category.name}}</option>
+    </select>
+    <button (click)="addTransaction(amount.value, payee.value, date.value, null, categoryId.value, accountId.value)">Add Transaction</button>
     
     <table border="1">
         <tr>
@@ -19,7 +22,7 @@
             <th>Account ID</th>
         </tr>
         
-        <tr *ngFor="let transactionJson of transactions | async">
+        <tr *ngFor="let transactionJson of transactions">
             <td>{{transactionJson.amount}}</td>
             <td>{{transactionJson.payee}}</td>
             <td>{{transactionJson.date}}</td>

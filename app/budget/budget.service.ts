@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Budget } from './budget.model';
-import { Category } from './category.model';
+import { Category } from '../category/category.model';
 
 @Injectable()
 export class BudgetService {

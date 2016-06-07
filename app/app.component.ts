@@ -8,6 +8,8 @@ import { BudgetService } from './budget/budget.service';
 import { BudgetsComponent } from './budget/budgets.component';
 import { TransactionService } from './transaction/transaction.service';
 import { TransactionsComponent } from './transaction/transactions.component';
+import { CategoryService } from './category/category.service';
+import { CategoriesComponent } from './category/categories.component';
 import * as _ from 'underscore';
 import * as lf from 'lf';
 
@@ -19,7 +21,8 @@ import * as lf from 'lf';
         ROUTER_PROVIDERS,
         AccountService,
         BudgetService,
-        TransactionService
+        TransactionService,
+        CategoryService
     ]
 })
 
@@ -43,6 +46,10 @@ import * as lf from 'lf';
     {
         path: '/transactions',
         component: TransactionsComponent
+    },
+    {
+        path: '/categories',
+        component: CategoriesComponent
     }
 ])
 
@@ -59,6 +66,6 @@ export class AppComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.router.navigate(['/accounts'])
+        this.router.navigate(['/categories'])
     }
 }

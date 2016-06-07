@@ -1,15 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FirebaseObjectObservable } from 'angularfire2';
 import { Budget } from './budget.model';
 import { BudgetService } from './budget.service';
-import { Category } from './category.model';
+import { Category } from '../category/category.model';
 
 @Component({
     selector: 'budget',
     templateUrl: 'app/budget/budget.component.html'
 })
-
-export class BudgetComponent {
+export class BudgetComponent implements OnInit {
     @Input() budgetJson;
     public budget: Budget;
     public hasChanges: boolean;

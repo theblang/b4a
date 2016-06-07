@@ -1,0 +1,13 @@
+<div>
+    <h2>Category</h2>
+    
+    <input type="text" #name>
+    <button (click)="addCategory(name.value)">Add</button>
+    
+    <ul *ngIf="categories">
+        <li *ngFor='let category of categories'>
+            <span>{{category.$key}}: {{category.name}}</span>
+            <button (click)="removeCategory(category.$key)">Delete</button>
+        </li>
+    </ul>
+</div>

@@ -14,6 +14,7 @@ export class BudgetsComponent {
     public budgets: FirebaseListObservable<Budget[]>;
     
     constructor(private budgetService: BudgetService) { }
+    
     ngOnInit() { 
         this.budgets = this.getBudgets();
     }
