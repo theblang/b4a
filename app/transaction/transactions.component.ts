@@ -13,7 +13,8 @@ import { Category } from '../budget/category.model';
 
 export class TransactionsComponent {
     public transactions: FirebaseListObservable<Transaction[]>;
-    public accounts: FirebaseListObservable<Account[]>;
+    public accountsObservable: FirebaseListObservable<Account[]>;
+    public accounts: Account[];
     public now: number;
 
     constructor(
@@ -22,8 +23,12 @@ export class TransactionsComponent {
 
     ngOnInit() {
         this.transactions = this.transactionService.getTransactions();
-        this.accounts = this.accountService.getAccounts();
+        this.accountsObservable = this.accountService.getAccountsObservable();
         this.now = Date.now();
+
+        this.accountsObservable.subscribe((accountsJson) => {
+            this.accounts = Account.parseJsonArray(accountsJson);
+        });
     }
 
     addTransaction(
@@ -33,10 +38,10 @@ export class TransactionsComponent {
         memo: string,
         category: Category,
         accountId: string): FirebaseWithPromise<void> {
-            
+
         return this.transactionService.addTransaction(new Transaction(amount, payee, date, memo, category, accountId));
     }
-    
+
     removeTransaction($key: string) {
         this.transactionService.removeTransaction($key);
     }

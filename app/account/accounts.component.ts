@@ -9,24 +9,22 @@ import { Account } from './account.model';
     templateUrl: 'app/account/accounts.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
-
 export class AccountsComponent {
-    public accounts: FirebaseListObservable<Account[]>;
+    public accounts: Account[];
 
     constructor(private accountService: AccountService) { }
-    
+
     ngOnInit() {
-        this.accounts = this.getAccounts();
+        this.accountService.getAccountsObservable()
+            .subscribe((accountsJson) => {
+                this.accounts = Account.parseJsonArray(accountsJson);
+            });
     }
 
-    getAccounts() {
-        return this.accountService.getAccounts();
-    }
-    
     addAccount(name: string) {
         return this.accountService.addAccount(new Account(name));
     }
-    
+
     removeAccount(key: string) {
         return this.accountService.removeAccount(key);
     }

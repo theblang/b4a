@@ -16,17 +16,17 @@ export class AccountComponent {
 
     ngOnInit() {
         console.log(this.routeSegment.getParam('id'));
-        this.accountObservable = this.accountService.getAccount(this.routeSegment.getParam('id'));
+        this.accountObservable = this.accountService.getAccountObservable(this.routeSegment.getParam('id'));
 
         this.accountObservable.subscribe(accountJson => {
-            this.account = new Account(accountJson.name);
+            this.account = new Account(accountJson['name']);
             console.log(accountJson);
-            console.log(accountJson.name);
+            console.log(accountJson['name']);
         });
     }
 
     getAccounts() {
-        return this.accountService.getAccounts();
+        return this.accountService.getAccountsObservable();
     }
 
     addAccount(name: string) {

@@ -1,9 +1,18 @@
 export class Account {
-    public name: string;
-    public id: string;
     
-    constructor(name: string, id: string=null) {
-        this.name = name;
-        this.id = id;
+    constructor(public name: string, public $key?: string) {}
+    
+    toJSON() {
+        const copy = Object.assign({}, this);
+        delete copy['$key'];
+        return copy;
+    }
+
+    public static parseJsonArray(accountsJson): Account[] {
+        let accounts: Account[] = [];
+        for(let accountJson of accountsJson) {
+            accounts.push(new Account(accountJson['name'], accountJson['$key']));
+        }
+        return accounts;
     }
 }
