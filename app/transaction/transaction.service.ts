@@ -22,6 +22,9 @@ export class TransactionService {
         });
     }
 
+    /**
+     * Adds a new Transaction and creates an index in the Category
+     */
     addTransaction(transaction: Transaction) {
         let transactionKey = this.database.list(Transaction.DB_NAME).push(transaction.toJSON()).key();
         this.database.object(Category.DB_NAME + '/' + transaction.category + Transaction.DB_NAME).update({
