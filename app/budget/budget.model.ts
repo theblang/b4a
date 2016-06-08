@@ -4,7 +4,7 @@ export class Budget {
     
     constructor(
         public name: string,
-        public categories: Category[] = [],
+        public categories: Object = null,
         public $key?: string
     ) { }
 

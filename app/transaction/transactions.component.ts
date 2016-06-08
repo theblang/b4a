@@ -49,10 +49,10 @@ export class TransactionsComponent implements OnInit {
         payee: string,
         date: Date,
         memo: string,
-        category: Category,
+        categoryId: string,
         accountId: string): FirebaseWithPromise<void> {
 
-        return this.transactionService.addTransaction(new Transaction(amount, payee, date, memo, category, accountId));
+        return this.transactionService.addTransaction(new Transaction(amount, payee, date, memo, categoryId, accountId));
     }
 
     removeTransaction($key: string) {

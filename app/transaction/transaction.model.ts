@@ -8,8 +8,8 @@ export class Transaction {
         public payee: string,
         public date: Date,
         public memo: string = null,
-        public categoryId: string = null,
-        public accountId: string = null,
+        public category: string = null,
+        public account: string = null,
         public $key: string = null) { }
 
     toJSON() {
@@ -32,8 +32,8 @@ export class Transaction {
             transactionJson['payee'],
             transactionJson['date'],
             transactionJson['memo'],
-            transactionJson['categoryId'],
-            transactionJson['accountId'],
+            transactionJson['category'],
+            transactionJson['account'],
             transactionJson['$key']
         )
     }

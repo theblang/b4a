@@ -5,6 +5,7 @@ export class Category {
         public name: string,
         public allocated: number = 0.0,
         public description: string = null,
+        public transactions: Object = null,
         public $key?: string) { }
 
     toJSON() {
@@ -14,14 +15,19 @@ export class Category {
     }
 
     public static parseJsonArray(categoriesJson): Category[] {
-        let categories:Category[] = [];
-        for(let categoryJson of categoriesJson) {
+        let categories: Category[] = [];
+        for (let categoryJson of categoriesJson) {
             categories.push(Category.parseJson(categoryJson));
         }
         return categories;
     }
 
     public static parseJson(categoryJson): Category {
-        return new Category(categoryJson['name'], categoryJson['allocated'], categoryJson['description'], categoryJson['$key']);
+        return new Category(
+            categoryJson['name'],
+            categoryJson['allocated'],
+            categoryJson['description'],
+            categoryJson['transactions'],
+            categoryJson['$key']);
     }
 }

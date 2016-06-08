@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseDatabase, FirebaseListObservable } from 'angularfire2';
-import { Transaction } from './transaction.model'
+import { Transaction } from './transaction.model';
+import { Category } from '../category/category.model';
+import 'rxjs/add/operator/first';
 
 @Injectable()
 export class TransactionService {
@@ -21,7 +23,10 @@ export class TransactionService {
     }
 
     addTransaction(transaction: Transaction) {
-        return this.database.list(Transaction.DB_NAME).push(transaction.toJSON());
+        let transactionKey = this.database.list(Transaction.DB_NAME).push(transaction.toJSON()).key();
+        this.database.object(Category.DB_NAME + '/' + transaction.category + Transaction.DB_NAME).update({
+            [transactionKey]: true
+        });
     }
 
     removeTransaction($key: string) {
