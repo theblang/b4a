@@ -26,8 +26,9 @@ export class BudgetComponent implements OnInit {
     }
 
     addCategory(name: string, budget: Budget) {
-        budget.categories.push(new Category(name));
-        this.budgetService.updateBudget(budget);
+        throw Error('Fix this');
+        //budget.categories.push(new Category(name));
+        //this.budgetService.updateBudget(budget);
     }
 
     saveBudget(budget: Budget) {

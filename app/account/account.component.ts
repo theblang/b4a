@@ -15,13 +15,10 @@ export class AccountComponent {
     constructor(private routeSegment: RouteSegment, private accountService: AccountService) { }
 
     ngOnInit() {
-        console.log(this.routeSegment.getParam('id'));
         this.accountObservable = this.accountService.getAccountObservable(this.routeSegment.getParam('id'));
-
+        
         this.accountObservable.subscribe(accountJson => {
             this.account = new Account(accountJson['name']);
-            console.log(accountJson);
-            console.log(accountJson['name']);
         });
     }
 
