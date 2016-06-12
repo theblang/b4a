@@ -8,6 +8,8 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false
+        // "baseUrl": ".",
+        // "paths": {}
     },
     "exclude": [
         "node_modules",
