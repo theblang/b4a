@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouteSegment } from '@angular/router';
 import { FirebaseObjectObservable } from 'angularfire2';
 import { AccountService } from './account.service';
@@ -8,7 +8,7 @@ import { Account } from './account.model';
     selector: 'account',
     templateUrl: 'app/account/account.component.html',
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
     public accountObservable: FirebaseObjectObservable<Account>;
     public account: Account;
 

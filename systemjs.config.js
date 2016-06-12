@@ -9,7 +9,8 @@
         'underscore':                 'node_modules/underscore/underscore-min.js',
         'lf':                         'node_modules/lovefield/dist/lovefield.min.js',
         'firebase':                   'node_modules/firebase/lib/firebase-web.js',
-        'angularfire2':               'node_modules/angularfire2'
+        'angularfire2':               'node_modules/angularfire2',
+        'ng2-charts':                 'node_modules/ng2-charts/bundles/ng2-charts.js'
     };
 
     // packages tells the System loader how to load when no filename and/or no extension

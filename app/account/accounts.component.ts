@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { FirebaseListObservable } from 'angularfire2';
 import { AccountService } from './account.service';
@@ -9,7 +9,7 @@ import { Account } from './account.model';
     templateUrl: 'app/account/accounts.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
-export class AccountsComponent {
+export class AccountsComponent implements OnInit {
     public accounts: Account[];
 
     constructor(private accountService: AccountService) { }
