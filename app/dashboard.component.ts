@@ -7,16 +7,16 @@ import { TransactionService } from './transaction/transaction.service';
 
 @Component({
     selector: 'dashboard',
-    templateUrl: 'app/dashboard.component.html'
-    // directives: [CHART_DIRECTIVES]
+    templateUrl: 'app/dashboard.component.html',
+    directives: [CHART_DIRECTIVES]
 })
 
 export class DashboardComponent implements OnInit {
     private categoriesObservable;
     private transactionsObservable;
 
-    public testLabels: string[] = ['foo', 'bar'];
-    public testData: number[] = [150, 100];
+    public testLabels: string[] = ['foo', 'bar', 'test'];
+    public testData: number[] = [150, 100, 50];
     public testType: string = 'doughnut';
 
     constructor(

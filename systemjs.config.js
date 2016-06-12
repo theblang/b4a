@@ -10,7 +10,7 @@
         'lf':                         'node_modules/lovefield/dist/lovefield.min.js',
         'firebase':                   'node_modules/firebase/lib/firebase-web.js',
         'angularfire2':               'node_modules/angularfire2',
-        'ng2-charts':                 'node_modules/ng2-charts/bundles/ng2-charts.js'
+        'ng2-charts':                 'node_modules/ng2-charts/components/charts'
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
@@ -19,6 +19,7 @@
         'rxjs':                       { defaultExtension: 'js' },
         'angularfire2':               { main: 'angularfire2.js', defaultExtension: 'js' },
         'angular2-in-memory-web-api': { defaultExtension: 'js' },
+        'ng2-charts':                 { main: 'charts.js', defaultExtension: 'js' }
     };
 
     var packageNames = [
