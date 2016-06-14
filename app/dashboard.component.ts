@@ -12,8 +12,8 @@ import { TransactionService } from './transaction/transaction.service';
 })
 
 export class DashboardComponent implements OnInit {
-    private categoriesObservable;
-    private transactionsObservable;
+    public categories: Category[];
+    public transactions: Transaction
 
     public testLabels: string[] = ['foo', 'bar', 'test'];
     public testData: number[] = [150, 100, 50];
@@ -24,7 +24,11 @@ export class DashboardComponent implements OnInit {
         private transactionService: TransactionService) { }
 
     ngOnInit() {
-        this.categoriesObservable = this.categoryService.getCategoriesObservable();
-        this.transactionsObservable = this.transactionService.getTransactionsObservable();
+        this.categoryService.getCategoriesObservable()
+            .subscribe((categoriesJson) => {
+                this.categories = Category.parseJsonArray(categoriesJson);
+            });
+            
+        this.transactionService.getTransactionsObservable();
     }
 }
