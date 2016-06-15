@@ -45,17 +45,17 @@ export class TransactionsComponent implements OnInit {
     }
 
     addTransaction(
-        amount: number,
+        amount: string,
         payee: string,
         date: Date,
         memo: string,
         category: string,
         account: string) {
 
-        return this.transactionService.addTransaction(new Transaction(amount, payee, date, memo, category, account));
+        return this.transactionService.addTransaction(new Transaction(Number.parseFloat(amount), payee, date, memo, category, account));
     }
 
-    removeTransaction($key: string) {
-        this.transactionService.removeTransaction($key);
+    removeTransaction(transaction: Transaction) {
+        this.transactionService.removeTransaction(transaction);
     }
 }

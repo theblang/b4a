@@ -14,6 +14,17 @@ export class Category {
         return copy;
     }
 
+    get spent(): number {
+        var amount = 0;
+        for (var key in this.transactions) {
+            if(this.transactions.hasOwnProperty(key)) {
+                amount += this.transactions[key];
+            }
+        }
+
+        return amount;
+    }
+
     public static parseJsonArray(categoriesJson): Category[] {
         let categories: Category[] = [];
         for (let categoryJson of categoriesJson) {

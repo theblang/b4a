@@ -11,14 +11,13 @@ import { TransactionService } from './transaction/transaction.service';
     styleUrls: ['app/dashboard.component.css'],
     directives: [CHART_DIRECTIVES]
 })
-
 export class DashboardComponent implements OnInit {
     public categories: Category[];
     public transactions: Transaction
 
-    public testLabels: string[] = ['foo', 'bar', 'test'];
-    public testData: number[] = [150, 100, 50];
-    public testType: string = 'doughnut';
+    public labels: string[] = [];
+    public data: number[] = [];
+    public type: string = 'doughnut';
 
     constructor(
         private categoryService: CategoryService,
@@ -26,10 +25,25 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         this.categoryService.getCategoriesObservable()
+            // .flatMap((categoriesJson) => {
+            //     this.categories = Category.parseJsonArray(categoriesJson);
+            //     return this.categories.map((category: Category) => {
+            //         this.transactionService.getTransactionsObservable();
+            //     })
+            // })
             .subscribe((categoriesJson) => {
                 this.categories = Category.parseJsonArray(categoriesJson);
+                this.buildSpendingChart(this.categories);
             });
-            
-        this.transactionService.getTransactionsObservable();
+    }
+
+    private buildSpendingChart(categories: Category[]) {
+        this.labels = [];
+        this.data = [];
+        
+        Array.from(this.categories, (category: Category) => {
+            this.labels.push(category.name);
+            this.data.push(category.spent);
+        });
     }
 }
