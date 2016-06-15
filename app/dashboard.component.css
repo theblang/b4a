@@ -1,0 +1,5 @@
+/*https://github.com/valor-software/ng2-charts/issues/229*/
+.chart {
+    display: block; 
+    width: 100%;
+}

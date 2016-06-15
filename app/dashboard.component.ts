@@ -8,6 +8,7 @@ import { TransactionService } from './transaction/transaction.service';
 @Component({
     selector: 'dashboard',
     templateUrl: 'app/dashboard.component.html',
+    styleUrls: ['app/dashboard.component.css'],
     directives: [CHART_DIRECTIVES]
 })
 
