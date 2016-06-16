@@ -14,8 +14,9 @@ import * as _ from 'underscore';
 import * as lf from 'lf';
 
 @Component({
-    selector: 'b4a',
+    selector: 'app',
     templateUrl: 'app/app.component.html',
+    styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
         ROUTER_PROVIDERS,
