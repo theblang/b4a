@@ -13,7 +13,7 @@ import { TransactionService } from './transaction/transaction.service';
 })
 export class DashboardComponent implements OnInit {
     public categories: Category[];
-    public transactions: Transaction
+    public transactions: Transaction;
 
     public labels: string[] = [];
     public data: number[] = [];
