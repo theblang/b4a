@@ -27,7 +27,7 @@ export class TransactionService {
      * Adds a new Transaction and creates an index in the Category
      */
     addTransaction(transaction: Transaction) {
-        transaction.$key = this.database.list(Transaction.DB_NAME).push(transaction.toJSON()).key();
+        transaction.$key = this.database.list(Transaction.DB_NAME).push(transaction.toJSON()).key;
         this.categoryService.addTransactionToCategory(transaction);
     }
 
