@@ -6,3 +6,5 @@ typings
 
 app/**/*.js
 app/**/*.map
+
+app/app.config.ts

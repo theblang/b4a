@@ -21,11 +21,11 @@ export class CategoriesComponent implements OnInit {
         });
     }
 
-    addCategory(name: string): FirebaseWithPromise<void> {
+    addCategory(name: string): firebase.database.ThenableReference {
         return this.categoryService.addCategory(new Category(name));
     }
 
-    removeCategory($key: string): Promise<void> {
+    removeCategory($key: string): firebase.Promise<void> {
         return this.categoryService.removeCategory($key);
     }
 }

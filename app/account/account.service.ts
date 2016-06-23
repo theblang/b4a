@@ -18,11 +18,11 @@ export class AccountService {
         return this.angularFire.database.object('/accounts/' + accountId);
     }
 
-    addAccount(account: Account): FirebaseWithPromise<void> {
+    addAccount(account: Account): firebase.database.ThenableReference {
         return this.list.push(account.toJSON());
     }
 
-    removeAccount($key: string): Promise<void> {
+    removeAccount($key: string): firebase.Promise<void> {
         if ($key) {
             return this.list.remove($key);
         }

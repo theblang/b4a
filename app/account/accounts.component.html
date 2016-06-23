@@ -6,7 +6,7 @@
     
     <ul *ngIf="accounts">
         <li *ngFor='let account of accounts'>
-            <a [routerLink]="['/account', account.$key]">
+            <a [routerLink]="['account', account.$key]">
                 <span>{{account.$key}}: {{account.name}}</span>
             </a>
             <button (click)="removeAccount(account.$key)">Delete</button>

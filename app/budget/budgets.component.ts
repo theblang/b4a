@@ -23,7 +23,7 @@ export class BudgetsComponent {
         return this.budgetService.getBudgets();
     }
     
-    addBudget(name: string): FirebaseWithPromise<void> {
+    addBudget(name: string): firebase.database.ThenableReference {
         return this.budgetService.addBudget(new Budget(name));
     }
 }

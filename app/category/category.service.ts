@@ -15,11 +15,11 @@ export class CategoryService {
         return this.database.list(Category.DB_NAME);
     }
 
-    addCategory(category: Category): FirebaseWithPromise<void> {
+    addCategory(category: Category): firebase.database.ThenableReference {
         return this.database.list(Category.DB_NAME).push(category.toJSON());
     }
 
-    removeCategory($key: string): Promise<void> {
+    removeCategory($key: string): firebase.Promise<void> {
         if ($key) {
             return this.database.list(Category.DB_NAME).remove($key);
         }
@@ -34,7 +34,7 @@ export class CategoryService {
         });
     }
 
-    removeTransactionFromCategory(transaction: Transaction): Promise<void> {
+    removeTransactionFromCategory(transaction: Transaction): firebase.Promise<void> {
         return this.database
             .object(Category.DB_NAME + '/' + transaction.category + Transaction.DB_NAME + '/' + transaction.$key)
             .remove();

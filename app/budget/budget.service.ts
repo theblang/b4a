@@ -19,7 +19,7 @@ export class BudgetService {
         return this.angularFire.database.object('/budgets/' + budgetId);
     }
 
-    addBudget(budget: Budget): FirebaseWithPromise<void> {
+    addBudget(budget: Budget): firebase.database.ThenableReference {
         return this.list.push(budget.toJSON());
     }
 
@@ -27,7 +27,7 @@ export class BudgetService {
         return this.list.update(budget.$key, budget.toJSON());
     }
 
-    removeBudget($key: string): Promise<void> {
+    removeBudget($key: string): firebase.Promise<void> {
         if ($key) {
             return this.list.remove($key);
         }

@@ -8,7 +8,7 @@
         '@angular':                   'node_modules/@angular',
         'underscore':                 'node_modules/underscore/underscore-min.js',
         'lf':                         'node_modules/lovefield/dist/lovefield.min.js',
-        'firebase':                   'node_modules/firebase/lib/firebase-web.js',
+        'firebase':                   'node_modules/firebase/firebase.js',
         'angularfire2':               'node_modules/angularfire2',
         'ng2-charts':                 'node_modules/ng2-charts/components/charts'
     };

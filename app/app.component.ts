@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Routes, RouteSegment, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
+import { Router, RouterConfig, ROUTER_DIRECTIVES} from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
 import { AccountComponent } from './account/account.component';
@@ -13,60 +13,36 @@ import { CategoriesComponent } from './category/categories.component';
 import * as _ from 'underscore';
 import * as lf from 'lf';
 
+export const ROUTES: RouterConfig = [
+    { path: '', component: DashboardComponent, terminal: true },
+    { path: 'accounts', component: AccountsComponent },
+    { path: 'account/:id', component: AccountComponent },
+    { path: 'budgets', component: BudgetsComponent },
+    { path: 'transactions', component: TransactionsComponent },
+    { path: 'categories', component: CategoriesComponent }
+];
+
 @Component({
     selector: 'app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
-        ROUTER_PROVIDERS,
         AccountService,
         BudgetService,
         TransactionService,
         CategoryService
     ]
 })
-
-@Routes([
-    {
-        path: '/dashboard',
-        component: DashboardComponent
-    },
-    {
-        path: '/accounts',
-        component: AccountsComponent
-    },
-    {
-        path: '/account/:id',
-        component: AccountComponent
-    },
-    {
-        path: '/budgets',
-        component: BudgetsComponent
-    },
-    {
-        path: '/transactions',
-        component: TransactionsComponent
-    },
-    {
-        path: '/categories',
-        component: CategoriesComponent
-    }
-])
-
 export class AppComponent implements OnInit {
     title = 'Budget 4 All'
     test = 0;
-    
+
     constructor(private router: Router) {
         _(5).times((n) => {
             this.test += n;
         });
-        
-        this.router.navigate
     }
-    
-    ngOnInit() {
-        this.router.navigate(['/transactions'])
-    }
+
+    ngOnInit() { }
 }
