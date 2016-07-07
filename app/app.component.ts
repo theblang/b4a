@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterConfig, ROUTER_DIRECTIVES} from '@angular/router';
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
 import { AccountComponent } from './account/account.component';
-import { DatabaseService } from './database.service';
+import { DatabaseService } from './common/database.service';
 import { AccountService } from './account/account.service';
 import { BudgetService } from './budget/budget.service';
 import { BudgetsComponent } from './budget/budgets.component';

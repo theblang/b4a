@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatabaseService } from '../database.service';
+import { DatabaseService } from '../common/database.service';
 import { Transaction } from './transaction.model';
 import { Category } from '../category/category.model';
 import * as lf from 'lf';

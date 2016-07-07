@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseObjectObservable } from 'angularfire2';
 import { AccountService } from './account.service';
 import { Account } from './account.model';
 
@@ -15,11 +14,7 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() {
         this.route.params
-            .map(params => params['id'])
-            .flatMap(id => this.accountService.getAccount(id))
-            .subscribe(accountJson => {
-                this.account = new Account(accountJson['name']);
-            });
+            .map(params => params['id']);
     }
 
     getAccounts() {
@@ -31,6 +26,5 @@ export class AccountComponent implements OnInit {
     }
 
     removeAccount(key: string) {
-        return this.accountService.removeAccount(key);
     }
 }

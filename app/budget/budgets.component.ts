@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseListObservable } from 'angularfire2';
 import { BudgetComponent } from './budget.component';
 import { BudgetService } from './budget.service';
 import { Budget } from './budget.model';
@@ -11,7 +10,7 @@ import { Budget } from './budget.model';
 })
 
 export class BudgetsComponent {
-    public budgets: FirebaseListObservable<Budget[]>;
+    public budgets;
     
     constructor(private budgetService: BudgetService) { }
     
@@ -19,11 +18,11 @@ export class BudgetsComponent {
         this.budgets = this.getBudgets();
     }
 
-    getBudgets(): FirebaseListObservable<Budget[]> {
+    getBudgets() {
         return this.budgetService.getBudgets();
     }
     
-    addBudget(name: string): firebase.database.ThenableReference {
+    addBudget(name: string) {
         return this.budgetService.addBudget(new Budget(name));
     }
 }

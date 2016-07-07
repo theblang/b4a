@@ -8,8 +8,6 @@
         '@angular':                   'node_modules/@angular',
         'underscore':                 'node_modules/underscore/underscore-min.js',
         'lf':                         'node_modules/lovefield/dist/lovefield.min.js',
-        'firebase':                   'node_modules/firebase/firebase.js',
-        'angularfire2':               'node_modules/angularfire2',
         'ng2-charts':                 'node_modules/ng2-charts/components/charts'
     };
 
@@ -17,7 +15,6 @@
     var packages = {
         'app':                        { main: 'main.js',  defaultExtension: 'js' },
         'rxjs':                       { defaultExtension: 'js' },
-        'angularfire2':               { main: 'angularfire2.js', defaultExtension: 'js' },
         'angular2-in-memory-web-api': { defaultExtension: 'js' },
         'ng2-charts':                 { main: 'charts.js', defaultExtension: 'js' }
     };

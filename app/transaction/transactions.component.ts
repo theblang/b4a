@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DatabaseService } from '../database.service';
+import { DatabaseService } from '../common/database.service';
 import { TransactionService } from './transaction.service';
 import { AccountService } from '../account/account.service';
 import { CategoryService } from '../category/category.service';

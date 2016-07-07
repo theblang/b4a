@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { FirebaseListObservable } from 'angularfire2';
 import { AccountService } from './account.service';
 import { Account } from './account.model';
 
@@ -15,10 +14,7 @@ export class AccountsComponent implements OnInit {
     constructor(private accountService: AccountService) { }
 
     ngOnInit() {
-        this.accountService.getAccounts()
-            .subscribe((accountsJson) => {
-                this.accounts = Account.parseJsonArray(accountsJson);
-            });
+        this.accountService.getAccounts();
     }
 
     addAccount(name: string) {
@@ -26,6 +22,5 @@ export class AccountsComponent implements OnInit {
     }
 
     removeAccount(key: string) {
-        return this.accountService.removeAccount(key);
     }
 }

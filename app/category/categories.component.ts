@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FirebaseListObservable } from 'angularfire2';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CategoryService } from './category.service';
 import { Category } from './category.model';
 
@@ -7,13 +6,17 @@ import { Category } from './category.model';
     selector: 'categories',
     templateUrl: 'app/category/categories.component.html'
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
     public categories: Category[];
 
     constructor(private categoryService: CategoryService) { }
 
     ngOnInit() {
         this.categoryService.getCategories();
+    }
+
+    ngOnDestroy() {
+        
     }
 
     addCategory(name: string) {

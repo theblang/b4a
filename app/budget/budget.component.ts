@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FirebaseObjectObservable } from 'angularfire2';
 import { Budget } from './budget.model';
 import { BudgetService } from './budget.service';
 import { Category } from '../category/category.model';
@@ -22,7 +21,6 @@ export class BudgetComponent implements OnInit {
     }
 
     removeBudget(budget: Budget) {
-        this.budgetService.removeBudget(budget.$key);
     }
 
     addCategory(name: string, budget: Budget) {
