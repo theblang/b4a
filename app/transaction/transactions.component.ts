@@ -13,13 +13,14 @@ import { Category } from '../category/category.model';
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
     public transactions: Transaction[];
-    public accounts: Account[];
     public categories: Category[];
+    public accounts: Account[];
     public now: number;
 
     constructor(
         private databaseService: DatabaseService,
-        private transactionService: TransactionService) { }
+        private transactionService: TransactionService,
+        private categoryService: CategoryService) { }
 
     ngOnInit() {
         this.now = Date.now();
@@ -27,10 +28,17 @@ export class TransactionsComponent implements OnInit, OnDestroy {
             .connect()
             .then((database) => {
                 this.transactionService.init(database);
-                this.transactionService.observeTransactions((changes: Object[]) => {
+                this.transactionService.observe((changes: Object[]) => {
                     this.transactions = Transaction.parseJsonArray(changes.pop()['object']);
                 }).then((jsonArray) => {
                     this.transactions = Transaction.parseJsonArray(jsonArray);
+                });
+
+                this.categoryService.init(database);
+                this.categoryService.observe((changes: Object[]) => {
+                    this.categories = Category.parseJsonArray(changes.pop()['object']);
+                }).then((jsonArray) => {
+                    this.categories = Category.parseJsonArray(jsonArray);
                 });
             })
     }
@@ -39,15 +47,15 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         this.databaseService
             .connect()
             .then((database) => {
-                this.transactionService.unobserveTransactions();
+                this.transactionService.unobserve();
             })
     }
 
-    addTransaction(amount: string) {
-        this.transactionService.addTransaction(new Transaction(Number.parseFloat(amount)));
+    addTransaction(amount: string, categoryId: number) {
+        this.transactionService.add(new Transaction(Number.parseFloat(amount), categoryId));
     }
 
     removeTransaction(transaction: Transaction) {
-        this.transactionService.removeTransaction(transaction);
+        this.transactionService.remove(transaction);
     }
 }

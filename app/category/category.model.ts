@@ -3,42 +3,30 @@ export class Category {
 
     constructor(
         public name: string,
-        public allocated: number = 0.0,
-        public description: string = null,
-        public transactions: Object = null,
         public id?: number) { }
 
-    toJSON() {
+    toJson() {
         const copy = Object.assign({}, this);
-        delete copy['$key'];
         return copy;
     }
 
-    get spent(): number {
-        var amount = 0;
-        for (var key in this.transactions) {
-            if (this.transactions.hasOwnProperty(key)) {
-                amount += this.transactions[key];
-            }
-        }
+    // get spent(): number {
+    //     var amount = 0;
+    //     return amount;
+    // }
 
-        return amount;
-    }
-
-    public static parseJsonArray(categoriesJson): Category[] {
+    public static parseJsonArray(jsonArray): Category[] {
         let categories: Category[] = [];
-        for (let categoryJson of categoriesJson) {
-            categories.push(Category.parseJson(categoryJson));
+        for (let json of jsonArray) {
+            categories.push(Category.parseJson(json));
         }
         return categories;
     }
 
-    public static parseJson(categoryJson): Category {
+    public static parseJson(json): Category {
         return new Category(
-            categoryJson['name'],
-            categoryJson['allocated'],
-            categoryJson['description'],
-            categoryJson['transactions'],
-            categoryJson['$key']);
+            json['name'],
+            json['id']
+        )
     }
 }

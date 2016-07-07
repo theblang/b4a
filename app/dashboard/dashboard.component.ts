@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit {
         private transactionService: TransactionService) { }
 
     ngOnInit() {
-        this.categoryService.getCategories();
     }
 
     private buildSpendingChart(categories: Category[]) {

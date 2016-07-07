@@ -10,7 +10,6 @@ export class Transaction {
 
     toJson() {
         const copy = Object.assign({}, this);
-        // delete copy['id'];
         return copy;
     }
 

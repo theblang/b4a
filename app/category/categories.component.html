@@ -6,8 +6,8 @@
     
     <ul *ngIf="categories">
         <li *ngFor='let category of categories'>
-            <span>{{category.$key}}: {{category.name}}</span>
-            <button (click)="removeCategory(category.$key)">Delete</button>
+            <span>{{category.name}}</span>
+            <button (click)="removeCategory(category)">Delete</button>
         </li>
     </ul>
 </div>

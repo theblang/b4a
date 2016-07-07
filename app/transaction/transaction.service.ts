@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from '../common/database.service';
+import { TableService } from '../common/table.service';
 import { Transaction } from './transaction.model';
 import { Category } from '../category/category.model';
 import * as lf from 'lf';
 
 @Injectable()
-export class TransactionService {
+export class TransactionService implements TableService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private query: lf.query.Select;
@@ -23,9 +24,9 @@ export class TransactionService {
      * immediately returns a promise containing an array of Transactions.
      * 
      * @handler Function to be called when changes are observed
-     * @return Promise containing an array of Transaction Json
+     * @return Promise containing an array of Transaction JSON
      */
-    observeTransactions(handler): Promise<Object[]> {
+    observe(handler): Promise<Object[]> {
         this.query = this.database
             .select()
             .from(this.table)
@@ -34,15 +35,12 @@ export class TransactionService {
 
         return this.query.exec();
     }
-
-    /**
-     * Stop observing changes to the database
-     */
-    unobserveTransactions() {
+    
+    unobserve() {
         this.database.unobserve(this.query, this.handler);
     }
 
-    addTransaction(transaction: Transaction): void {
+    add(transaction: Transaction): void {
         console.log(transaction.toJson());
 
         this.database
@@ -55,7 +53,7 @@ export class TransactionService {
             })
     }
 
-    removeTransaction(transaction: Transaction): void {
+    remove(transaction: Transaction): void {
         this.database
             .delete()
             .from(this.table)
