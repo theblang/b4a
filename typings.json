@@ -2,7 +2,7 @@
     "globalDependencies": {
         "firebase": "https://gist.githubusercontent.com/cdcarson/28399c50b02bf6c507fbf5b7b30daa31/raw/fa089d231ca4253d4715f8161efc6af74c972dfa/firebase-sdk-3-typings.d.ts",
         "jasmine": "registry:dt/jasmine#2.2.0+20160412134438",
-        "lovefield": "registry:dt/lovefield#2.0.62+20160317120654",
+        "lovefield": "registry:dt/lovefield#2.0.62+20160625232231",
         "node": "registry:dt/node#4.0.0+20160509154515",
         "underscore": "registry:dt/underscore#1.7.0+20160505190121"
     }

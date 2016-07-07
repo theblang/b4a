@@ -3,6 +3,7 @@ import { Router, RouterConfig, ROUTER_DIRECTIVES} from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
 import { AccountComponent } from './account/account.component';
+import { DatabaseService } from './database.service';
 import { AccountService } from './account/account.service';
 import { BudgetService } from './budget/budget.service';
 import { BudgetsComponent } from './budget/budgets.component';
@@ -11,7 +12,6 @@ import { TransactionsComponent } from './transaction/transactions.component';
 import { CategoryService } from './category/category.service';
 import { CategoriesComponent } from './category/categories.component';
 import * as _ from 'underscore';
-import * as lf from 'lf';
 
 export const ROUTES: RouterConfig = [
     { path: '', component: DashboardComponent, terminal: true },
@@ -28,6 +28,7 @@ export const ROUTES: RouterConfig = [
     styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
+        DatabaseService,
         AccountService,
         BudgetService,
         TransactionService,
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
     title = 'Budget 4 All'
     test = 0;
 
-    constructor(private router: Router) {
+    constructor(private databaseService: DatabaseService, private router: Router) {
         _(5).times((n) => {
             this.test += n;
         });

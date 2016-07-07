@@ -10,11 +10,11 @@ export class AccountService {
         this.list = angularFire.database.list('/accounts');
     }
 
-    getAccountsObservable(): FirebaseListObservable<Account[]> {
+    getAccounts(): FirebaseListObservable<Account[]> {
         return this.list;
     }
 
-    getAccountObservable(accountId: string): FirebaseObjectObservable<Account> {
+    getAccount(accountId: string): FirebaseObjectObservable<Account> {
         return this.angularFire.database.object('/accounts/' + accountId);
     }
 

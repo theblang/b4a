@@ -15,7 +15,7 @@ export class AccountsComponent implements OnInit {
     constructor(private accountService: AccountService) { }
 
     ngOnInit() {
-        this.accountService.getAccountsObservable()
+        this.accountService.getAccounts()
             .subscribe((accountsJson) => {
                 this.accounts = Account.parseJsonArray(accountsJson);
             });

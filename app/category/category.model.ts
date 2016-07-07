@@ -1,12 +1,12 @@
 export class Category {
-    public static DB_NAME = '/categories';
+    public static TABLE_NAME = 'categories';
 
     constructor(
         public name: string,
         public allocated: number = 0.0,
         public description: string = null,
         public transactions: Object = null,
-        public $key?: string) { }
+        public id?: number) { }
 
     toJSON() {
         const copy = Object.assign({}, this);
@@ -17,7 +17,7 @@ export class Category {
     get spent(): number {
         var amount = 0;
         for (var key in this.transactions) {
-            if(this.transactions.hasOwnProperty(key)) {
+            if (this.transactions.hasOwnProperty(key)) {
                 amount += this.transactions[key];
             }
         }

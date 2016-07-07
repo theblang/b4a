@@ -11,7 +11,7 @@
     <select #account>
         <option *ngFor="let account of accounts" value="{{account.$key}}">{{account.name}}</option>
     </select>
-    <button (click)="addTransaction(amount.value, payee.value, date.value, memo.value, category.value, account.value)">Add Transaction</button>
+    <button (click)="addTransaction(amount.value)">Add Transaction</button>
     
     <table border="1">
         <tr>

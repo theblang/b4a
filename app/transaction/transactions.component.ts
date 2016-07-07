@@ -1,58 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { FirebaseListObservable } from 'angularfire2';
-import { Transaction } from './transaction.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DatabaseService } from '../database.service';
 import { TransactionService } from './transaction.service';
-import { Account } from '../account/account.model';
 import { AccountService } from '../account/account.service';
-import { Category } from '../category/category.model';
 import { CategoryService } from '../category/category.service';
+import { Transaction } from './transaction.model';
+import { Account } from '../account/account.model';
+import { Category } from '../category/category.model';
 
 @Component({
     selector: 'transactions',
     templateUrl: 'app/transaction/transactions.component.html'
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent implements OnInit, OnDestroy {
     public transactions: Transaction[];
     public accounts: Account[];
     public categories: Category[];
-    public transactionsObservable: FirebaseListObservable<Transaction[]>;
-    public accountsObservable: FirebaseListObservable<Account[]>;
-    public categoriesObservable: FirebaseListObservable<Category[]>;
     public now: number;
 
     constructor(
-        private transactionService: TransactionService,
-        private accountService: AccountService,
-        private categoryService: CategoryService) { }
+        private databaseService: DatabaseService,
+        private transactionService: TransactionService) { }
 
     ngOnInit() {
-        this.transactionsObservable = this.transactionService.getTransactionsObservable();
-        this.accountsObservable = this.accountService.getAccountsObservable();
-        this.categoriesObservable = this.categoryService.getCategoriesObservable();
         this.now = Date.now();
-
-        this.transactionsObservable.subscribe((transactionsJson) => {
-            this.transactions = Transaction.parseJsonArray(transactionsJson);
-        });
-
-        this.accountsObservable.subscribe((accountsJson) => {
-            this.accounts = Account.parseJsonArray(accountsJson);
-        });
-
-        this.categoriesObservable.subscribe((categoriesJson) => {
-            this.categories = Category.parseJsonArray(categoriesJson);
-        });
+        this.databaseService
+            .connect()
+            .then((database) => {
+                this.transactionService.init(database);
+                this.transactionService.observeTransactions((changes: Object[]) => {
+                    this.transactions = Transaction.parseJsonArray(changes.pop()['object']);
+                }).then((jsonArray) => {
+                    this.transactions = Transaction.parseJsonArray(jsonArray);
+                });
+            })
     }
 
-    addTransaction(
-        amount: string,
-        payee: string,
-        date: Date,
-        memo: string,
-        category: string,
-        account: string) {
+    ngOnDestroy() {
+        this.databaseService
+            .connect()
+            .then((database) => {
+                this.transactionService.unobserveTransactions();
+            })
+    }
 
-        return this.transactionService.addTransaction(new Transaction(Number.parseFloat(amount), payee, date, memo, category, account));
+    addTransaction(amount: string) {
+        this.transactionService.addTransaction(new Transaction(Number.parseFloat(amount)));
     }
 
     removeTransaction(transaction: Transaction) {

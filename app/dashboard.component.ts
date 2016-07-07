@@ -24,17 +24,7 @@ export class DashboardComponent implements OnInit {
         private transactionService: TransactionService) { }
 
     ngOnInit() {
-        this.categoryService.getCategoriesObservable()
-            // .flatMap((categoriesJson) => {
-            //     this.categories = Category.parseJsonArray(categoriesJson);
-            //     return this.categories.map((category: Category) => {
-            //         this.transactionService.getTransactionsObservable();
-            //     })
-            // })
-            .subscribe((categoriesJson) => {
-                this.categories = Category.parseJsonArray(categoriesJson);
-                this.buildSpendingChart(this.categories);
-            });
+        this.categoryService.getCategories();
     }
 
     private buildSpendingChart(categories: Category[]) {

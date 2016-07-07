@@ -1,41 +1,65 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseDatabase, FirebaseListObservable } from 'angularfire2';
+import { DatabaseService } from '../database.service';
 import { Transaction } from './transaction.model';
 import { Category } from '../category/category.model';
-import { CategoryService } from '../category/category.service';
-import 'rxjs/add/operator/first';
+import * as lf from 'lf';
 
 @Injectable()
 export class TransactionService {
-    private database: FirebaseDatabase;
+    private database: lf.Database;
+    private table: lf.schema.Table;
+    private query: lf.query.Select;
+    private handler: Function;
 
-    constructor(private angularFire: AngularFire, private categoryService: CategoryService) {
-        this.database = this.angularFire.database;
-    }
+    constructor() { }
 
-    getTransactionsObservable(startAt: number = 0, endAt: number = 50): FirebaseListObservable<Transaction[]> {
-        return this.angularFire.database.list(Transaction.DB_NAME, {
-            query: {
-                limitToFirst: 50
-                // startAt: startAt,
-                // endAt: endAt
-            }
-        });
+    init(database: lf.Database) {
+        this.database = database;
+        this.table = database.getSchema().table(Transaction.TABLE_NAME);
     }
 
     /**
-     * Adds a new Transaction and creates an index in the Category
+     * Configures a handler function to observe changes to the database and
+     * immediately returns a promise containing an array of Transactions.
+     * 
+     * @handler Function to be called when changes are observed
+     * @return Promise containing an array of Transaction Json
      */
-    addTransaction(transaction: Transaction) {
-        transaction.$key = this.database.list(Transaction.DB_NAME).push(transaction.toJSON()).key;
-        this.categoryService.addTransactionToCategory(transaction);
+    observeTransactions(handler): Promise<Object[]> {
+        this.query = this.database
+            .select()
+            .from(this.table)
+        this.handler = handler;
+        this.database.observe(this.query, this.handler);
+
+        return this.query.exec();
     }
 
     /**
-     * Removes a transaction and deletes the corresponding index value in Category
+     * Stop observing changes to the database
      */
-    removeTransaction(transaction: Transaction) {
-        this.database.list(Transaction.DB_NAME).remove(transaction.$key);
-        this.categoryService.removeTransactionFromCategory(transaction);
+    unobserveTransactions() {
+        this.database.unobserve(this.query, this.handler);
+    }
+
+    addTransaction(transaction: Transaction): void {
+        console.log(transaction.toJson());
+
+        this.database
+            .insert()
+            .into(this.table)
+            .values([this.table.createRow(transaction.toJson())])
+            .exec()
+            .catch((reason) => {
+                console.error(reason.message);
+            })
+    }
+
+    removeTransaction(transaction: Transaction): void {
+        this.database
+            .delete()
+            .from(this.table)
+            .where(this.table['id'].eq(transaction.id))
+            .exec();
     }
 }

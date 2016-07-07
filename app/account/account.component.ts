@@ -9,7 +9,6 @@ import { Account } from './account.model';
     templateUrl: 'app/account/account.component.html',
 })
 export class AccountComponent implements OnInit {
-    public accountObservable: FirebaseObjectObservable<Account>;
     public account: Account;
 
     constructor(private route: ActivatedRoute, private accountService: AccountService) { }
@@ -17,14 +16,14 @@ export class AccountComponent implements OnInit {
     ngOnInit() {
         this.route.params
             .map(params => params['id'])
-            .flatMap(id => this.accountService.getAccountObservable(id))
+            .flatMap(id => this.accountService.getAccount(id))
             .subscribe(accountJson => {
                 this.account = new Account(accountJson['name']);
             });
     }
 
     getAccounts() {
-        return this.accountService.getAccountsObservable();
+        return this.accountService.getAccounts();
     }
 
     addAccount(name: string) {

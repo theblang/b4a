@@ -15,4 +15,7 @@
         "node_modules",
         "typings/index.d.ts"
     ]
+    // "files": [
+    //     "node_modules/angularfire2/firebase3.d.ts"
+    // ]
 }
