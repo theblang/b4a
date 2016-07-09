@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
         this.data = [];
 
         for (let category of categories) {
-            this.labels.push(category.name);;
+            this.labels.push(category.name);
 
             let spent = transactions
                 .filter((transaction) => {
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
                 .map(transaction => transaction.amount)
                 .reduce((previous, current) => {
                     return previous + current;
-                })
+                }, 0)
 
             this.data.push(spent);
         }
