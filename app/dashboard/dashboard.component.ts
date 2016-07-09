@@ -14,27 +14,56 @@ import { TransactionService } from '../transaction/transaction.service';
 })
 export class DashboardComponent implements OnInit {
     public categories: Category[];
-    public transactions: Transaction;
+    public transactions: Transaction[];
 
     public labels: string[] = [];
     public data: number[] = [];
     public type: string = 'doughnut';
 
     constructor(
-        private DatabaseService: DatabaseService,
+        private databaseService: DatabaseService,
         private categoryService: CategoryService,
         private transactionService: TransactionService) { }
 
     ngOnInit() {
+        this.databaseService
+            .connect()
+            .then((database) => {
+                this.transactionService.init(database);
+                this.transactionService.observe((changes: Object[]) => {
+                    this.transactions = Transaction.parseRows(changes.pop()['object']);
+                }).then((jsonArray) => {
+                    this.transactions = Transaction.parseRows(jsonArray);
+
+                    this.categoryService.init(database);
+                    return this.categoryService.observe((changes: Object[]) => {
+                        this.categories = Category.parseJsonArray(changes.pop()['object']);
+                    })
+                }).then((jsonArray) => {
+                    this.categories = Category.parseJsonArray(jsonArray);
+
+                    this.buildSpendingChart(this.categories, this.transactions);
+                });
+            })
     }
 
-    private buildSpendingChart(categories: Category[]) {
+    private buildSpendingChart(categories: Category[], transactions: Transaction[]) {
         this.labels = [];
         this.data = [];
-        
-        Array.from(this.categories, (category: Category) => {
-            this.labels.push(category.name);
-            // this.data.push(category.spent);
-        });
+
+        for (let category of categories) {
+            this.labels.push(category.name);;
+
+            let spent = transactions
+                .filter((transaction) => {
+                    return transaction.category.id === category.id;
+                })
+                .map(transaction => transaction.amount)
+                .reduce((previous, current) => {
+                    return previous + current;
+                })
+
+            this.data.push(spent);
+        }
     }
 }

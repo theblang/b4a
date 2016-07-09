@@ -24,6 +24,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.now = Date.now();
+        
         this.databaseService
             .connect()
             .then((database) => {
