@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as lf from 'lf';
 import { Transaction } from '../transaction/transaction.model';
 import { Category } from '../category/category.model';
+import { Account } from '../account/account.model';
 
 @Injectable()
 export class DatabaseService {
@@ -12,7 +13,7 @@ export class DatabaseService {
     };
 
     constructor() {
-        this.schemaBuilder = lf.schema.create('b4a', 2);
+        this.schemaBuilder = lf.schema.create('b4a', 3);
 
         this.schemaBuilder.createTable(Transaction.TABLE_NAME)
             .addColumn('id', lf.Type.INTEGER)
@@ -32,6 +33,12 @@ export class DatabaseService {
             .addColumn('allocated', lf.Type.INTEGER)
             .addColumn('name', lf.Type.STRING)
             .addNullable(['allocated', 'name'])
+            .addPrimaryKey(['id'], true)
+
+        this.schemaBuilder.createTable(Account.TABLE_NAME)
+            .addColumn('id', lf.Type.INTEGER)
+            .addColumn('name', lf.Type.STRING)
+            .addNullable(['name'])
             .addPrimaryKey(['id'], true)
 
         this.schemaBuilder.connect(this.options)

@@ -1,17 +1,24 @@
-export class Account {
-    
-    constructor(public name: string, public $key?: string) {}
-    
-    toJSON() {
-        const copy = Object.assign({}, this);
-        delete copy['$key'];
-        return copy;
+import { LovefieldModel } from '../common/lovefield.model';
+
+export class Account implements LovefieldModel {
+    public static TABLE_NAME = 'accounts';
+
+    constructor(
+        public name: string,
+        public id?: number) { }
+
+    toRow(): Object {
+        const row = Object.assign({}, this);
+        return row;
     }
 
-    public static parseJsonArray(accountsJson): Account[] {
+    public static parseRows(rows: Object[]): Account[] {
         let accounts: Account[] = [];
-        for(let accountJson of accountsJson) {
-            accounts.push(new Account(accountJson['name'], accountJson['$key']));
+        for (let row of rows) {
+            accounts.push(new Account(
+                row['name'],
+                row['id']
+            ));
         }
         return accounts;
     }

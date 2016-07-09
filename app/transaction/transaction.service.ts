@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from '../common/database.service';
-import { TableService } from '../common/table.service';
+import { LovefieldService } from '../common/lovefield.service';
 import { Transaction } from './transaction.model';
 import { Category } from '../category/category.model';
 import * as lf from 'lf';
 
 @Injectable()
-export class TransactionService implements TableService {
+export class TransactionService implements LovefieldService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private categoryTable: lf.schema.Table;

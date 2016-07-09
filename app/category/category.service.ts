@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from '../common/database.service';
-import { TableService } from '../common/table.service';
+import { LovefieldService } from '../common/lovefield.service';
 import { Category } from '../category/category.model';
 import * as lf from 'lf';
 
 @Injectable()
-export class CategoryService implements TableService {
+export class CategoryService implements LovefieldService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private query: lf.query.Select;
@@ -36,7 +36,7 @@ export class CategoryService implements TableService {
         this.database
             .insert()
             .into(this.table)
-            .values([this.table.createRow(category.toJson())])
+            .values([this.table.createRow(category.toRow())])
             .exec()
             .catch((reason) => {
                 console.error(reason.message);

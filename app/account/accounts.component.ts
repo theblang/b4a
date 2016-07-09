@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import { DatabaseService } from '../common/database.service';
 import { AccountService } from './account.service';
 import { Account } from './account.model';
 
@@ -11,16 +12,36 @@ import { Account } from './account.model';
 export class AccountsComponent implements OnInit {
     public accounts: Account[];
 
-    constructor(private accountService: AccountService) { }
+    constructor(
+        private databaseService: DatabaseService,
+        private accountService: AccountService) { }
 
     ngOnInit() {
-        this.accountService.getAccounts();
+        this.databaseService
+            .connect()
+            .then((database) => {
+                this.accountService.init(database);
+                this.accountService.observe((changes: Object[]) => {
+                    this.accounts = Account.parseRows(changes.pop()['object']);
+                }).then((rows: Object[]) => {
+                    this.accounts = Account.parseRows(rows);
+                });
+            })
+    }
+
+    ngOnDestroy() {
+        this.databaseService
+            .connect()
+            .then((database) => {
+                this.accountService.unobserve();
+            })
     }
 
     addAccount(name: string) {
-        return this.accountService.addAccount(new Account(name));
+        this.accountService.add(new Account(name));
     }
 
-    removeAccount(key: string) {
+    removeAccount(index: number) {
+        this.accountService.remove(this.accounts[index]);
     }
 }

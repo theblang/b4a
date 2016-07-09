@@ -20,9 +20,9 @@ export class CategoriesComponent implements OnInit, OnDestroy {
             .then((database) => {
                 this.categoryService.init(database);
                 this.categoryService.observe((changes: Object[]) => {
-                    this.categories = Category.parseJsonArray(changes.pop()['object']);
+                    this.categories = Category.parseRows(changes.pop()['object']);
                 }).then((jsonArray) => {
-                    this.categories = Category.parseJsonArray(jsonArray);
+                    this.categories = Category.parseRows(jsonArray);
                 });
             })
     }

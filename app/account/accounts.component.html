@@ -4,12 +4,13 @@
     <input type="text" #name>
     <button (click)="addAccount(name.value)">Add</button>
     
+    <!-- check for use of Elvis operator -->
     <ul *ngIf="accounts">
-        <li *ngFor='let account of accounts'>
-            <a [routerLink]="['account', account.$key]">
-                <span>{{account.$key}}: {{account.name}}</span>
+        <li *ngFor='let account of accounts; let i = index;'>
+            <a [routerLink]="['account', account.id]">
+                <span>{{account.name}}</span>
             </a>
-            <button (click)="removeAccount(account.$key)">Delete</button>
+            <button (click)="removeAccount(i)">Delete</button>
         </li>
     </ul>
 </div>

@@ -1,6 +1,7 @@
+import { LovefieldModel } from '../common/lovefield.model';
 import { Category } from '../category/category.model';
 
-export class Transaction {
+export class Transaction implements LovefieldModel {
     public static TABLE_NAME = 'transactions';
 
     constructor(
@@ -8,12 +9,7 @@ export class Transaction {
         public category?,
         public id?) { }
 
-    toJson() {
-        const json = Object.assign({}, this);
-        return json;
-    }
-
-    toRow() {
+    toRow(): Object {
         const row = Object.assign({}, this);
         row['categoryId'] = row.category.id;
         delete row.category;

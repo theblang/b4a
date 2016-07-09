@@ -1,4 +1,4 @@
-export interface TableService {
+export interface LovefieldService {
     init(database: lf.Database): void;
     observe(handler: Function): Promise<Object[]>;
     unobserve(): void;

@@ -10,7 +10,9 @@ import { Account } from './account.model';
 export class AccountComponent implements OnInit {
     public account: Account;
 
-    constructor(private route: ActivatedRoute, private accountService: AccountService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private accountService: AccountService) { }
 
     ngOnInit() {
         this.route.params
@@ -18,13 +20,13 @@ export class AccountComponent implements OnInit {
     }
 
     getAccounts() {
-        return this.accountService.getAccounts();
     }
 
     addAccount(name: string) {
-        return this.accountService.addAccount(new Account(name));
+        return this.accountService.add(new Account(name));
     }
 
-    removeAccount(key: string) {
+    removeAccount(account: Account) {
+        this.accountService.remove(account);
     }
 }
