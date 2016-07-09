@@ -9,6 +9,7 @@ import * as lf from 'lf';
 export class TransactionService implements TableService {
     private database: lf.Database;
     private table: lf.schema.Table;
+    private categoryTable: lf.schema.Table;
     private query: lf.query.Select;
     private handler: Function;
 
@@ -17,6 +18,7 @@ export class TransactionService implements TableService {
     init(database: lf.Database) {
         this.database = database;
         this.table = database.getSchema().table(Transaction.TABLE_NAME);
+        this.categoryTable = database.getSchema().table(Category.TABLE_NAME);
     }
 
     /**
@@ -30,6 +32,7 @@ export class TransactionService implements TableService {
         this.query = this.database
             .select()
             .from(this.table)
+            .leftOuterJoin(this.categoryTable, this.categoryTable['id'].eq(this.table['categoryId']))
         this.handler = handler;
         this.database.observe(this.query, this.handler);
 
@@ -41,12 +44,10 @@ export class TransactionService implements TableService {
     }
 
     add(transaction: Transaction): void {
-        console.log(transaction.toJson());
-
         this.database
             .insert()
             .into(this.table)
-            .values([this.table.createRow(transaction.toJson())])
+            .values([this.table.createRow(transaction.toRow())])
             .exec()
             .catch((reason) => {
                 console.error(reason.message);

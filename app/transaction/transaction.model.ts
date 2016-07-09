@@ -5,27 +5,30 @@ export class Transaction {
 
     constructor(
         public amount: number,
-        public categoryId: number = null,
-        public id: number = null) { }
+        public category?,
+        public id?) { }
 
     toJson() {
-        const copy = Object.assign({}, this);
-        return copy;
+        const json = Object.assign({}, this);
+        return json;
     }
 
-    public static parseJsonArray(jsonArray): Transaction[] {
+    toRow() {
+        const row = Object.assign({}, this);
+        row['categoryId'] = row.category.id;
+        delete row.category;
+        return row;
+    }
+
+    public static parseRows(rows: Object[]): Transaction[] {
         let transactions: Transaction[] = [];
-        for (let json of jsonArray) {
-            transactions.push(Transaction.parseJson(json));
+        for (let row of rows) {
+            transactions.push(new Transaction(
+                row[this.TABLE_NAME]['amount'],
+                row[Category.TABLE_NAME],
+                row[this.TABLE_NAME]['id']
+            ));
         }
         return transactions;
-    }
-
-    public static parseJson(json): Transaction {
-        return new Transaction(
-            json['amount'],
-            json['categoryId'],
-            json['id']
-        )
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterConfig, ROUTER_DIRECTIVES} from '@angular/router';
+import * as _ from 'underscore';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
 import { AccountComponent } from './account/account.component';
@@ -9,9 +10,8 @@ import { BudgetService } from './budget/budget.service';
 import { BudgetsComponent } from './budget/budgets.component';
 import { TransactionService } from './transaction/transaction.service';
 import { TransactionsComponent } from './transaction/transactions.component';
-import { CategoryService } from './category/category.service';
 import { CategoriesComponent } from './category/categories.component';
-import * as _ from 'underscore';
+import {CategoryService} from "./category/category.service";
 
 export const ROUTES: RouterConfig = [
     { path: '', component: DashboardComponent, terminal: true },

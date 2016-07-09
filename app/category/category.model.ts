@@ -12,6 +12,12 @@ export class Category {
 
     // get spent(): number {
     //     var amount = 0;
+    //     for (var key in this.transactions) {
+    //         if (this.transactions.hasOwnProperty(key)) {
+    //             amount += this.transactions[key];
+    //         }
+    //     }
+
     //     return amount;
     // }
 

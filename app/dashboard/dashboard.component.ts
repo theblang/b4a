@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CHART_DIRECTIVES } from 'ng2-charts';
+import { DatabaseService } from '../common/database.service';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category.model';
 import { Transaction } from '../transaction/transaction.model';
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
     public type: string = 'doughnut';
 
     constructor(
+        private DatabaseService: DatabaseService,
         private categoryService: CategoryService,
         private transactionService: TransactionService) { }
 
@@ -32,7 +34,7 @@ export class DashboardComponent implements OnInit {
         
         Array.from(this.categories, (category: Category) => {
             this.labels.push(category.name);
-            this.data.push(category.spent);
+            // this.data.push(category.spent);
         });
     }
 }

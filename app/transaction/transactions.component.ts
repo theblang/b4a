@@ -29,9 +29,9 @@ export class TransactionsComponent implements OnInit, OnDestroy {
             .then((database) => {
                 this.transactionService.init(database);
                 this.transactionService.observe((changes: Object[]) => {
-                    this.transactions = Transaction.parseJsonArray(changes.pop()['object']);
+                    this.transactions = Transaction.parseRows(changes.pop()['object']);
                 }).then((jsonArray) => {
-                    this.transactions = Transaction.parseJsonArray(jsonArray);
+                    this.transactions = Transaction.parseRows(jsonArray);
                 });
 
                 this.categoryService.init(database);
@@ -51,8 +51,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
             })
     }
 
-    addTransaction(amount: string, categoryId: number) {
-        this.transactionService.add(new Transaction(Number.parseFloat(amount), categoryId));
+    addTransaction(amount: string, categoryIndex: number) {
+        this.transactionService.add(new Transaction(Number.parseFloat(amount), this.categories[categoryIndex]));
     }
 
     removeTransaction(transaction: Transaction) {
