@@ -43,8 +43,8 @@ export class CategoryService implements LovefieldService {
             })
     }
 
-    remove(category: Category): void {
-        this.database
+    remove(category: Category): Promise<Object[]> {
+        return this.database
             .delete()
             .from(this.table)
             .where(this.table['id'].eq(category.id))

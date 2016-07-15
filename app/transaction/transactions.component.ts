@@ -70,6 +70,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     }
 
     removeTransaction(transaction: Transaction) {
-        this.transactionService.remove(transaction);
+        this.transactionService
+            .remove(transaction)
+            .then((value: Object[]) => {
+                console.log(value);
+            })
+            .catch((reason) => {
+                console.log(reason);
+            });
     }
 }

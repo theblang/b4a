@@ -42,7 +42,7 @@ export class TransactionService implements LovefieldService {
 
         return this.query.exec();
     }
-    
+
     unobserve() {
         this.database.unobserve(this.query, this.handler);
     }
@@ -58,8 +58,8 @@ export class TransactionService implements LovefieldService {
             })
     }
 
-    remove(transaction: Transaction): void {
-        this.database
+    remove(transaction: Transaction): Promise<Object[]> {
+        return this.database
             .delete()
             .from(this.table)
             .where(this.table['id'].eq(transaction.id))

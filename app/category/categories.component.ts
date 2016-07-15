@@ -40,6 +40,13 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     }
 
     removeCategory(category: Category) {
-        this.categoryService.remove(category);
+        this.categoryService
+            .remove(category)
+            .then((value: Object[]) => {
+                console.log(value);
+            })
+            .catch((reason) => {
+                console.log(reason);  
+            });
     }
 }

@@ -43,8 +43,8 @@ export class AccountService implements LovefieldService {
             })
     }
 
-    remove(account: Account): void {
-        this.database
+    remove(account: Account): Promise<Object[]> {
+        return this.database
             .delete()
             .from(this.table)
             .where(this.table['id'].eq(account.id))

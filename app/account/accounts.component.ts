@@ -42,6 +42,14 @@ export class AccountsComponent implements OnInit {
     }
 
     removeAccount(index: number) {
-        this.accountService.remove(this.accounts[index]);
+        const account = this.accounts[index];
+        this.accountService
+            .remove(account)
+            .then((value: Object[]) => {
+                console.log(value);
+            })
+            .catch((reason) => {
+                console.log(reason);
+            });
     }
 }
