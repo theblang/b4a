@@ -8,10 +8,10 @@
     <select #categoryIndex>
         <option *ngFor="let category of categories; let i = index;" [value]="i">{{category.name}}</option>
     </select>
-    <select #accountId>
-        <option *ngFor="let account of accounts" value="{{account.id}}">{{account.name}}</option>
+    <select #accountIndex>
+        <option *ngFor="let account of accounts; let i = index;" [value]="i">{{account.name}}</option>
     </select>
-    <button (click)="addTransaction(amount.value, categoryIndex.value)">Add Transaction</button>
+    <button (click)="addTransaction(amount.value, categoryIndex.value, accountIndex.value)">Add Transaction</button>
     
     <table border="1">
         <tr>
@@ -29,7 +29,7 @@
             <td>{{transaction.date}}</td>
             <td>{{transaction.memo}}</td>
             <td>{{transaction.category.name}}</td>
-            <td>{{transaction.accountId}}</td>
+            <td>{{transaction.account.name}}</td>
             <td><button (click)="removeTransaction(transaction)">Delete</button></td>
         </tr>
     </table>

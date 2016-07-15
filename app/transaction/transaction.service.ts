@@ -3,6 +3,7 @@ import { DatabaseService } from '../common/database.service';
 import { LovefieldService } from '../common/lovefield.service';
 import { Transaction } from './transaction.model';
 import { Category } from '../category/category.model';
+import { Account } from '../account/account.model';
 import * as lf from 'lf';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class TransactionService implements LovefieldService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private categoryTable: lf.schema.Table;
+    private accountTable: lf.schema.Table;
     private query: lf.query.Select;
     private handler: Function;
 
@@ -19,6 +21,7 @@ export class TransactionService implements LovefieldService {
         this.database = database;
         this.table = database.getSchema().table(Transaction.TABLE_NAME);
         this.categoryTable = database.getSchema().table(Category.TABLE_NAME);
+        this.accountTable = database.getSchema().table(Account.TABLE_NAME);
     }
 
     /**
@@ -33,6 +36,7 @@ export class TransactionService implements LovefieldService {
             .select()
             .from(this.table)
             .leftOuterJoin(this.categoryTable, this.categoryTable['id'].eq(this.table['categoryId']))
+            .leftOuterJoin(this.accountTable, this.accountTable['id'].eq(this.table['accountId']));
         this.handler = handler;
         this.database.observe(this.query, this.handler);
 

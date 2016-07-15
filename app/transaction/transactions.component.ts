@@ -20,11 +20,12 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     constructor(
         private databaseService: DatabaseService,
         private transactionService: TransactionService,
-        private categoryService: CategoryService) { }
+        private categoryService: CategoryService,
+        private accountService: AccountService) { }
 
     ngOnInit() {
         this.now = Date.now();
-        
+
         this.databaseService
             .connect()
             .then((database) => {
@@ -41,6 +42,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
                 }).then((jsonArray) => {
                     this.categories = Category.parseRows(jsonArray);
                 });
+
+                this.accountService.init(database);
+                this.accountService.observe((changes: Object[]) => {
+                    this.accounts = Account.parseRows(changes.pop()['object']);
+                }).then((jsonArray) => {
+                    this.accounts = Account.parseRows(jsonArray);
+                })
             })
     }
 
@@ -52,8 +60,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
             })
     }
 
-    addTransaction(amount: string, categoryIndex: number) {
-        this.transactionService.add(new Transaction(Number.parseFloat(amount), this.categories[categoryIndex]));
+    addTransaction(amount: string, categoryIndex: number, accountIndex: number) {
+        this.transactionService.add(
+            new Transaction(
+                Number.parseFloat(amount),
+                this.categories[categoryIndex],
+                this.accounts[accountIndex])
+        );
     }
 
     removeTransaction(transaction: Transaction) {

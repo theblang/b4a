@@ -13,15 +13,22 @@ export class DatabaseService {
     };
 
     constructor() {
-        this.schemaBuilder = lf.schema.create('b4a', 3);
+        this.schemaBuilder = lf.schema.create('b4a', 4);
 
         this.schemaBuilder.createTable(Transaction.TABLE_NAME)
             .addColumn('id', lf.Type.INTEGER)
             .addColumn('amount', lf.Type.INTEGER)
             .addColumn('categoryId', lf.Type.INTEGER)
+            .addColumn('accountId', lf.Type.INTEGER)
             .addForeignKey('fk_CategoryId', {
                 local: 'categoryId',
                 ref: 'categories.id',
+                action: lf.ConstraintAction.RESTRICT,
+                timing: lf.ConstraintTiming.DEFERRABLE
+            })
+            .addForeignKey('fk_AccountId', {
+                local: 'accountId',
+                ref: 'accounts.id',
                 action: lf.ConstraintAction.RESTRICT,
                 timing: lf.ConstraintTiming.DEFERRABLE
             })
