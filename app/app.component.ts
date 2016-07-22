@@ -11,7 +11,7 @@ import { BudgetsComponent } from './budget/budgets.component';
 import { TransactionService } from './transaction/transaction.service';
 import { TransactionsComponent } from './transaction/transactions.component';
 import { CategoriesComponent } from './category/categories.component';
-import {CategoryService} from "./category/category.service";
+import { CategoryService } from "./category/category.service";
 
 export const ROUTES: RouterConfig = [
     { path: '', component: DashboardComponent, terminal: true },

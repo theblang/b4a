@@ -18,10 +18,15 @@ export class AccountService implements LovefieldService {
         this.table = database.getSchema().table(Account.TABLE_NAME);
     }
 
-    observe(handler): Promise<Object[]> {
+    observe(handler, id?: number): Promise<Object[]> {
         this.query = this.database
             .select()
             .from(this.table)
+
+        if(id) {
+            this.query.where(this.table['id'].eq(id))
+        }
+
         this.handler = handler;
         this.database.observe(this.query, this.handler);
 

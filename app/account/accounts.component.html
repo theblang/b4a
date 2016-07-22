@@ -7,7 +7,7 @@
     <!-- FIXME: check for use of Elvis operator -->
     <ul *ngIf="accounts">
         <li *ngFor='let account of accounts; let i = index;'>
-            <a [routerLink]="['account', account.id]">
+            <a [routerLink]="['/account', account.id]">
                 <span>{{account.name}}</span>
             </a>
             <button (click)="removeAccount(i)">Delete</button>
