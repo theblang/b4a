@@ -7,7 +7,7 @@
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
         '@angular':                   'node_modules/@angular',
         'underscore':                 'node_modules/underscore/underscore-min.js',
-        'lf':                         'node_modules/lovefield/dist/lovefield.min.js',
+        'lf':                         'node_modules/lovefield/dist/lovefield.es6.js',
         'ng2-charts':                 'node_modules/ng2-charts/components/charts'
     };
 

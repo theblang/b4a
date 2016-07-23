@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatabaseService } from '../common/database.service';
 import { AccountService } from './account.service';
 import { Account } from './account.model';
 import { Observable} from 'rxjs';
+import 'rxjs/add/operator/take';
 
 @Component({
     selector: 'account',
     templateUrl: 'app/account/account.component.html',
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
     public account: Account;
     public accountId: number;
 
@@ -19,27 +20,25 @@ export class AccountComponent implements OnInit {
         private accountService: AccountService) { }
 
     ngOnInit() {
-        debugger
-        this.route.params.toPromise()
-            .catch((reason) => {
-                console.error(reason);
-            })
+        this.route.params.take(1).toPromise()
             .then((params) => {
                 debugger
                 this.accountId = params['id'];
                 return this.databaseService.connect()
             })
             .then((database) => {
-                debugger
                 this.accountService.init(database);
                 return this.accountService.observe((changes: Object[]) => {
                     this.account = _.first(Account.parseRows(changes.pop()['object']));
                 }, this.accountId);
             })
             .then((rows) => {
-                debugger
                 this.account = _.first(Account.parseRows(rows));
             });
+    }
+
+    ngOnDestroy() {
+        
     }
 
     getAccounts() {

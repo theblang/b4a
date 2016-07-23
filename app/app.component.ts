@@ -37,13 +37,8 @@ export const ROUTES: RouterConfig = [
 })
 export class AppComponent implements OnInit {
     title = 'Budget 4 All'
-    test = 0;
 
-    constructor(private databaseService: DatabaseService, private router: Router) {
-        _(5).times((n) => {
-            this.test += n;
-        });
-    }
+    constructor(private databaseService: DatabaseService, private router: Router) { }
 
     ngOnInit() { }
 }

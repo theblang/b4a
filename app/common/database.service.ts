@@ -13,7 +13,7 @@ export class DatabaseService {
     };
 
     constructor() {
-        this.schemaBuilder = lf.schema.create('b4a', 4);
+        this.schemaBuilder = lf.schema.create('b4a', 1);
 
         this.schemaBuilder.createTable(Transaction.TABLE_NAME)
             .addColumn('id', lf.Type.INTEGER)
@@ -53,6 +53,7 @@ export class DatabaseService {
                 console.log('Database connected');
                 this.database = database;
             }).catch((reason) => {
+                debugger
                 console.error(reason);
             })
     }
