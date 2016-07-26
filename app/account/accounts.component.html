@@ -4,7 +4,6 @@
     <input type="text" #name>
     <button (click)="addAccount(name.value)">Add</button>
     
-    <!-- FIXME: check for use of Elvis operator -->
     <ul *ngIf="accounts">
         <li *ngFor='let account of accounts; let i = index;'>
             <a [routerLink]="['/account', account.id]">

@@ -22,7 +22,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.route.params.take(1).toPromise()
             .then((params) => {
-                debugger
                 this.accountId = params['id'];
                 return this.databaseService.connect()
             })
@@ -38,7 +37,11 @@ export class AccountComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        
+        this.databaseService
+            .connect()
+            .then((database) => {
+                this.accountService.unobserve();
+            })
     }
 
     getAccounts() {
