@@ -7,6 +7,7 @@ import { Account } from '../account/account.model';
 @Injectable()
 export class DatabaseService {
     private database: lf.Database;
+    private connectPromise: Promise<lf.Database>;
     private schemaBuilder: lf.schema.Builder;
     private options: lf.schema.ConnectOptions = {
         storeType: lf.schema.DataStoreType.INDEXED_DB
@@ -47,24 +48,20 @@ export class DatabaseService {
             .addColumn('name', lf.Type.STRING)
             .addNullable(['name'])
             .addPrimaryKey(['id'], true)
-
-        this.schemaBuilder.connect(this.options)
-            .then((database: lf.Database) => {
-                console.log('Database connected');
-                this.database = database;
-            }).catch((reason) => {
-                debugger
-                console.error(reason);
-            })
     }
 
     connect(): Promise<lf.Database> {
-        if (!this.database) {
-            return this.schemaBuilder.connect(this.options)
+        if (!this.connectPromise) {
+            this.connectPromise = this.schemaBuilder.connect(this.options)
+                .then((database: lf.Database) => {
+                    console.log('Database connected');
+                    this.database = database;
+                    return this.database;
+                }).catch((reason) => {
+                    console.error(reason);
+                });
         }
 
-        return new Promise((resolve, reject) => {
-            resolve(this.database);
-        })
+        return this.connectPromise;
     }
 }
