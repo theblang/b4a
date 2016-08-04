@@ -58,8 +58,9 @@ export class TransactionService {
     }
 
     unobserve() {
-        for (let query of this.queries) {
+        for (const [index, query] of this.queries.entries()) {
             this.database.unobserve(query, this.handler);
+            this.queries.splice(index, 1);
         }
     }
 

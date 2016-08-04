@@ -26,38 +26,39 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.now = Date.now();
 
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.transactionService.init(database);
-        //         this.transactionService.observe((changes: Object[]) => {
-        //             this.transactions = Transaction.parseRows(changes.pop()['object']);
-        //         }).then((jsonArray) => {
-        //             this.transactions = Transaction.parseRows(jsonArray);
-        //         });
+        this.databaseService.connect()
+            .flatMap((database) => {
+                this.transactionService.init(database);
+                this.categoryService.init(database);
+                this.accountService.init(database);
 
-        //         this.categoryService.init(database);
-        //         this.categoryService.observe((changes: Object[]) => {
-        //             this.categories = Category.parseRows(changes.pop()['object']);
-        //         }).then((jsonArray) => {
-        //             this.categories = Category.parseRows(jsonArray);
-        //         });
+                return this.transactionService.observe((changes: Object[]) => {
+                    this.transactions = Transaction.parseRows(changes.pop()['object']);
+                })
+            })
+            .flatMap((transactionsJson) => {
+                this.transactions = Transaction.parseRows((transactionsJson));
 
-        //         this.accountService.init(database);
-        //         this.accountService.observe((changes: Object[]) => {
-        //             this.accounts = Account.parseRows(changes.pop()['object']);
-        //         }).then((jsonArray) => {
-        //             this.accounts = Account.parseRows(jsonArray);
-        //         })
-        //     })
+                return this.categoryService.observe((changes: Object[]) => {
+                    this.categories = Category.parseRows(changes.pop()['object']);
+                })
+            })
+            .flatMap((categoriesJson) => {
+                this.categories = Category.parseRows((categoriesJson));
+
+                return this.accountService.observe((changes: Object[]) => {
+                    this.accounts = Account.parseRows(changes.pop()['object']);
+                })
+            })
+            .subscribe((accountsJson) => {
+                this.accounts = Account.parseRows(accountsJson);
+            });
     }
 
     ngOnDestroy() {
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.transactionService.unobserve();
-        //     })
+        this.transactionService.unobserve();
+        this.accountService.unobserve();
+        this.categoryService.unobserve();
     }
 
     addTransaction(amount: string, categoryIndex: number, accountIndex: number) {

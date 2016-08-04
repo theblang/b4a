@@ -17,16 +17,17 @@ export class AccountsComponent implements OnInit {
         private accountService: AccountService) { }
 
     ngOnInit() {
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.accountService.init(database);
-        //         this.accountService.observe((changes: Object[]) => {
-        //             this.accounts = Account.parseRows(changes.pop()['object']);
-        //         }).then((rows: Object[]) => {
-        //             this.accounts = Account.parseRows(rows);
-        //         });
-        //     })
+        this.databaseService.connect()
+            .flatMap((database) => {
+                this.accountService.init(database);
+
+                return this.accountService.observe((changes: Object[]) => {
+                    this.accounts = Account.parseRows(changes.pop()['object']);
+                })
+            })
+            .subscribe((accountsJson) => {
+                this.accounts = Account.parseRows((accountsJson));
+            });
     }
 
     ngOnDestroy() {
