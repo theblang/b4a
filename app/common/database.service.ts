@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as lf from 'lf';
+import { Observable } from 'rxjs';
 import { Transaction } from '../transaction/transaction.model';
 import { Category } from '../category/category.model';
 import { Account } from '../account/account.model';
@@ -50,7 +51,7 @@ export class DatabaseService {
             .addPrimaryKey(['id'], true)
     }
 
-    connect(): Promise<lf.Database> {
+    connect(): Observable<lf.Database> {
         if (!this.connectPromise) {
             this.connectPromise = this.schemaBuilder.connect(this.options)
                 .then((database: lf.Database) => {
@@ -62,6 +63,6 @@ export class DatabaseService {
                 });
         }
 
-        return this.connectPromise;
+        return Observable.fromPromise(this.connectPromise);
     }
 }

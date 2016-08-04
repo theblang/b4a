@@ -5,7 +5,7 @@ import { Category } from '../category/category.model';
 import * as lf from 'lf';
 
 @Injectable()
-export class CategoryService implements LovefieldService {
+export class CategoryService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private query: lf.query.Select;

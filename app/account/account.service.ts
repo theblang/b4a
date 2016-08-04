@@ -5,7 +5,7 @@ import { Account } from '../account/account.model';
 import * as lf from 'lf';
 
 @Injectable()
-export class AccountService implements LovefieldService {
+export class AccountService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private query: lf.query.Select;

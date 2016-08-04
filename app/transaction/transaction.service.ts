@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DatabaseService } from '../common/database.service';
 import { LovefieldService } from '../common/lovefield.service';
 import { Transaction } from './transaction.model';
@@ -7,15 +8,15 @@ import { Account } from '../account/account.model';
 import * as lf from 'lf';
 
 @Injectable()
-export class TransactionService implements LovefieldService {
+export class TransactionService {
     private database: lf.Database;
     private table: lf.schema.Table;
     private categoryTable: lf.schema.Table;
     private accountTable: lf.schema.Table;
-    private query: lf.query.Select;
+    private queries: lf.query.Select[] = [];
     private handler: Function;
 
-    constructor() { }
+    constructor(private databaseService: DatabaseService) { }
 
     init(database: lf.Database) {
         this.database = database;
@@ -26,36 +27,40 @@ export class TransactionService implements LovefieldService {
 
     /**
      * Configures a handler function to observe changes to the database and
-     * immediately returns a promise containing an array of Transactions.
+     * immediately returns an Observable containing a JSON array of Transactions.
      * 
      * @handler Function to be called when changes are observed
      * @id Optional id to specificy a specific Transaction
      * @accountId Optional id to specify Transactions for a specific Account
-     * @return Promise containing an array of Transaction JSON
+     * 
+     * @return Observable containing a JSON array of Transactions
      */
-    observe(handler, id?: number, accountId?: number): Promise<Object[]> {
-        this.query = this.database
+    observe(handler, id?: number, accountId?: number): Observable<Object[]> {
+        const query = this.database
             .select()
             .from(this.table)
             .leftOuterJoin(this.categoryTable, this.categoryTable['id'].eq(this.table['categoryId']))
             .leftOuterJoin(this.accountTable, this.accountTable['id'].eq(this.table['accountId']));
 
-        if(id) {
-            this.query.where(this.table['id'].eq(id));
+        if (id) {
+            query.where(this.table['id'].eq(id));
         }
 
-        if(accountId) {
-            this.query.where(this.table['accountId'].eq(accountId));
+        if (accountId) {
+            query.where(this.table['accountId'].eq(accountId));
         }
 
         this.handler = handler;
-        this.database.observe(this.query, this.handler);
+        this.database.observe(query, this.handler);
+        this.queries.push(query);
 
-        return this.query.exec();
+        return Observable.fromPromise(query.exec());
     }
 
     unobserve() {
-        this.database.unobserve(this.query, this.handler);
+        for (let query of this.queries) {
+            this.database.unobserve(query, this.handler);
+        }
     }
 
     add(transaction: Transaction): void {

@@ -15,24 +15,24 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         private categoryService: CategoryService) { }
 
     ngOnInit() {
-        this.databaseService
-            .connect()
-            .then((database) => {
-                this.categoryService.init(database);
-                this.categoryService.observe((changes: Object[]) => {
-                    this.categories = Category.parseRows(changes.pop()['object']);
-                }).then((jsonArray) => {
-                    this.categories = Category.parseRows(jsonArray);
-                });
-            })
+        // this.databaseService
+        //     .connect()
+        //     .then((database) => {
+        //         this.categoryService.init(database);
+        //         this.categoryService.observe((changes: Object[]) => {
+        //             this.categories = Category.parseRows(changes.pop()['object']);
+        //         }).then((jsonArray) => {
+        //             this.categories = Category.parseRows(jsonArray);
+        //         });
+        //     })
     }
 
     ngOnDestroy() {
-        this.databaseService
-            .connect()
-            .then((database) => {
-                this.categoryService.unobserve();
-            })
+        // this.databaseService
+        //     .connect()
+        //     .then((database) => {
+        //         this.categoryService.unobserve();
+        //     })
     }
 
     addCategory(name: string) {

@@ -26,38 +26,38 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.now = Date.now();
 
-        this.databaseService
-            .connect()
-            .then((database) => {
-                this.transactionService.init(database);
-                this.transactionService.observe((changes: Object[]) => {
-                    this.transactions = Transaction.parseRows(changes.pop()['object']);
-                }).then((jsonArray) => {
-                    this.transactions = Transaction.parseRows(jsonArray);
-                });
+        // this.databaseService
+        //     .connect()
+        //     .then((database) => {
+        //         this.transactionService.init(database);
+        //         this.transactionService.observe((changes: Object[]) => {
+        //             this.transactions = Transaction.parseRows(changes.pop()['object']);
+        //         }).then((jsonArray) => {
+        //             this.transactions = Transaction.parseRows(jsonArray);
+        //         });
 
-                this.categoryService.init(database);
-                this.categoryService.observe((changes: Object[]) => {
-                    this.categories = Category.parseRows(changes.pop()['object']);
-                }).then((jsonArray) => {
-                    this.categories = Category.parseRows(jsonArray);
-                });
+        //         this.categoryService.init(database);
+        //         this.categoryService.observe((changes: Object[]) => {
+        //             this.categories = Category.parseRows(changes.pop()['object']);
+        //         }).then((jsonArray) => {
+        //             this.categories = Category.parseRows(jsonArray);
+        //         });
 
-                this.accountService.init(database);
-                this.accountService.observe((changes: Object[]) => {
-                    this.accounts = Account.parseRows(changes.pop()['object']);
-                }).then((jsonArray) => {
-                    this.accounts = Account.parseRows(jsonArray);
-                })
-            })
+        //         this.accountService.init(database);
+        //         this.accountService.observe((changes: Object[]) => {
+        //             this.accounts = Account.parseRows(changes.pop()['object']);
+        //         }).then((jsonArray) => {
+        //             this.accounts = Account.parseRows(jsonArray);
+        //         })
+        //     })
     }
 
     ngOnDestroy() {
-        this.databaseService
-            .connect()
-            .then((database) => {
-                this.transactionService.unobserve();
-            })
+        // this.databaseService
+        //     .connect()
+        //     .then((database) => {
+        //         this.transactionService.unobserve();
+        //     })
     }
 
     addTransaction(amount: string, categoryIndex: number, accountIndex: number) {

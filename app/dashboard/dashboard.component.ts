@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CHART_DIRECTIVES } from 'ng2-charts';
 import { DatabaseService } from '../common/database.service';
 import { CategoryService } from '../category/category.service';
@@ -12,7 +12,7 @@ import { TransactionService } from '../transaction/transaction.service';
     styleUrls: ['app/dashboard/dashboard.component.css'],
     directives: [CHART_DIRECTIVES]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
     public categories: Category[];
     public transactions: Transaction[];
 
@@ -26,25 +26,30 @@ export class DashboardComponent implements OnInit {
         private transactionService: TransactionService) { }
 
     ngOnInit() {
-        this.databaseService
-            .connect()
-            .then((database) => {
+        this.databaseService.connect()
+            .flatMap((database) => {
                 this.transactionService.init(database);
-                this.transactionService.observe((changes: Object[]) => {
-                    this.transactions = Transaction.parseRows(changes.pop()['object']);
-                }).then((jsonArray) => {
-                    this.transactions = Transaction.parseRows(jsonArray);
+                this.categoryService.init(database);
 
-                    this.categoryService.init(database);
+                return this.transactionService.observe((changes: Object[]) => {
+                    this.transactions = Transaction.parseRows(changes.pop()['object']);
+                })
+            })
+            .flatMap((transactionsJson) => {
+                this.transactions = Transaction.parseRows(transactionsJson);
+
                     return this.categoryService.observe((changes: Object[]) => {
                         this.categories = Category.parseRows(changes.pop()['object']);
                     })
-                }).then((jsonArray) => {
-                    this.categories = Category.parseRows(jsonArray);
-
-                    this.buildSpendingChart(this.categories, this.transactions);
-                });
             })
+            .subscribe((categoriesJson) => {
+                    this.categories = Category.parseRows(categoriesJson);
+                    this.buildSpendingChart(this.categories, this.transactions);
+            });
+    }
+
+    ngOnDestroy() {
+        this.transactionService.unobserve();
     }
 
     private buildSpendingChart(categories: Category[], transactions: Transaction[]) {

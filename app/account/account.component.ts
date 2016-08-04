@@ -24,37 +24,37 @@ export class AccountComponent implements OnInit, OnDestroy {
         private transactionService: TransactionService) { }
 
     ngOnInit() {
-        this.route.params.take(1).toPromise()
-            .then((params) => {
-                this.accountId = params['id'];
-                return this.databaseService.connect()
-            })
-            .then((database) => {
-                this.accountService.init(database);
-                this.transactionService.init(database);
+        // this.route.params.take(1).toPromise()
+        //     .then((params) => {
+        //         this.accountId = params['id'];
+        //         return this.databaseService.connect()
+        //     })
+        //     .then((database) => {
+        //         this.accountService.init(database);
+        //         this.transactionService.init(database);
 
-                return this.accountService.observe((changes: Object[]) => {
-                    this.account = _.first(Account.parseRows(changes.pop()['object']));
-                }, this.accountId);
-            })
-            .then((rows) => {
-                this.account = _.first(Account.parseRows(rows));
+        //         return this.accountService.observe((changes: Object[]) => {
+        //             this.account = _.first(Account.parseRows(changes.pop()['object']));
+        //         }, this.accountId);
+        //     })
+        //     .then((rows) => {
+        //         this.account = _.first(Account.parseRows(rows));
 
-                return this.transactionService.observe((changes: Object[]) => {
-                    this.transactions = Transaction.parseRows(changes.pop()['object']);
-                }, null, this.account.id);
-            })
-            .catch((reason) => {
-                console.log(reason);
-            });
+        //         return this.transactionService.observe((changes: Object[]) => {
+        //             this.transactions = Transaction.parseRows(changes.pop()['object']);
+        //         }, null, this.account.id);
+        //     })
+        //     .catch((reason) => {
+        //         console.log(reason);
+        //     });
     }
 
     ngOnDestroy() {
-        this.databaseService
-            .connect()
-            .then((database) => {
-                this.accountService.unobserve();
-            })
+        // this.databaseService
+        //     .connect()
+        //     .then((database) => {
+        //         this.accountService.unobserve();
+        //     })
     }
 
     getAccounts() {
