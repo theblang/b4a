@@ -24,44 +24,28 @@ export class AccountComponent implements OnInit, OnDestroy {
         private transactionService: TransactionService) { }
 
     ngOnInit() {
-        // this.route.params.take(1).toPromise()
-        //     .then((params) => {
-        //         this.accountId = params['id'];
-        //         return this.databaseService.connect()
-        //     })
-        //     .then((database) => {
-        //         this.accountService.init(database);
-        //         this.transactionService.init(database);
+        this.route.params
+            .flatMap((params) => {
+                this.accountId = params['id'];
 
-        //         return this.accountService.observe((changes: Object[]) => {
-        //             this.account = _.first(Account.parseRows(changes.pop()['object']));
-        //         }, this.accountId);
-        //     })
-        //     .then((rows) => {
-        //         this.account = _.first(Account.parseRows(rows));
+                return this.databaseService.connect();
+            })
+            .flatMap((database) => {
+                this.accountService.init(database);
 
-        //         return this.transactionService.observe((changes: Object[]) => {
-        //             this.transactions = Transaction.parseRows(changes.pop()['object']);
-        //         }, null, this.account.id);
-        //     })
-        //     .catch((reason) => {
-        //         console.log(reason);
-        //     });
+                const handler = (changes: Object[]) => {
+                    this.account = _.first(Account.parseRows(changes.pop()['object']));
+                };
+
+                return this.accountService.observe(handler, this.accountId);
+            })
+            .subscribe((accountsJson) => {
+                this.account = _.first(Account.parseRows((accountsJson)));
+            });
     }
 
     ngOnDestroy() {
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.accountService.unobserve();
-        //     })
-    }
-
-    getAccounts() {
-    }
-
-    addAccount(name: string) {
-        return this.accountService.add(new Account(name));
+        this.accountService.unobserve();
     }
 
     removeAccount(account: Account) {

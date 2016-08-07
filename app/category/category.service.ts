@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import * as lf from 'lf';
 import { DatabaseService } from '../common/database.service';
 import { LovefieldService } from '../common/lovefield.service';
 import { Category } from '../category/category.model';
-import * as lf from 'lf';
+import { QueryState } from '../common/query-state.model';
 
 @Injectable()
 export class CategoryService {
     private database: lf.Database;
     private table: lf.schema.Table;
-    private query: lf.query.Select;
-    private handler: Function;
+    private queryStates: QueryState[] = [];
 
     constructor() { }
 
@@ -18,36 +19,42 @@ export class CategoryService {
         this.table = database.getSchema().table(Category.TABLE_NAME);
     }
 
-    observe(handler): Promise<Object[]> {
-        this.query = this.database
+    observe(handler: Function): Observable<Object[]> {
+        const query = this.database
             .select()
             .from(this.table)
-        this.handler = handler;
-        this.database.observe(this.query, this.handler);
 
-        return this.query.exec();
+        this.database.observe(query, handler);
+        this.queryStates.push({
+            query: query,
+            handler: handler
+        });
+
+        return Observable.fromPromise(query.exec());
     }
 
-    unobserve() {
-        this.database.unobserve(this.query, this.handler);
+    unobserve(): void {
+        for (const [index, queryState] of this.queryStates.entries()) {
+            this.database.unobserve(queryState.query, queryState.handler);
+            this.queryStates.splice(index, 1);
+        }
     }
 
-    add(category: Category): void {
-        this.database
+    add(category: Category): Observable<Object[]> {
+        const query = this.database
             .insert()
             .into(this.table)
-            .values([this.table.createRow(category.toRow())])
-            .exec()
-            .catch((reason) => {
-                console.error(reason.message);
-            })
+            .values([this.table.createRow(category.toRow())]);
+
+        return Observable.fromPromise(query.exec());
     }
 
-    remove(category: Category): Promise<Object[]> {
-        return this.database
+    remove(category: Category): Observable<Object[]> {
+        const query = this.database
             .delete()
             .from(this.table)
-            .where(this.table['id'].eq(category.id))
-            .exec();
+            .where(this.table['id'].eq(category.id));
+
+        return Observable.fromPromise(query.exec());
     }
 }

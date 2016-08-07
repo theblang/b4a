@@ -21,9 +21,11 @@ export class AccountsComponent implements OnInit {
             .flatMap((database) => {
                 this.accountService.init(database);
 
-                return this.accountService.observe((changes: Object[]) => {
+                const handler = (changes: Object[]) => {
                     this.accounts = Account.parseRows(changes.pop()['object']);
-                })
+                };
+
+                return this.accountService.observe(handler)
             })
             .subscribe((accountsJson) => {
                 this.accounts = Account.parseRows((accountsJson));
@@ -31,11 +33,7 @@ export class AccountsComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.accountService.unobserve();
-        //     })
+        this.accountService.unobserve();
     }
 
     addAccount(name: string) {

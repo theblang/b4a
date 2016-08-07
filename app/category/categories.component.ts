@@ -15,24 +15,23 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         private categoryService: CategoryService) { }
 
     ngOnInit() {
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.categoryService.init(database);
-        //         this.categoryService.observe((changes: Object[]) => {
-        //             this.categories = Category.parseRows(changes.pop()['object']);
-        //         }).then((jsonArray) => {
-        //             this.categories = Category.parseRows(jsonArray);
-        //         });
-        //     })
+        this.databaseService.connect()
+            .flatMap((database) => {
+                this.categoryService.init(database);
+
+                const handler = (changes: Object[]) => {
+                    this.categories = Category.parseRows(changes.pop()['object']);
+                };
+
+                return this.categoryService.observe(handler);
+            })
+            .subscribe((categoriesJson) => {
+                this.categories = Category.parseRows((categoriesJson));
+            });
     }
 
     ngOnDestroy() {
-        // this.databaseService
-        //     .connect()
-        //     .then((database) => {
-        //         this.categoryService.unobserve();
-        //     })
+        this.categoryService.unobserve();
     }
 
     addCategory(name: string) {
@@ -40,13 +39,6 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     }
 
     removeCategory(category: Category) {
-        this.categoryService
-            .remove(category)
-            .then((value: Object[]) => {
-                console.log(value);
-            })
-            .catch((reason) => {
-                console.log(reason);  
-            });
+        this.categoryService.remove(category);
     }
 }

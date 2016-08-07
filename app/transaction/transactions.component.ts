@@ -46,9 +46,11 @@ export class TransactionsComponent implements OnInit, OnDestroy {
             .flatMap((categoriesJson) => {
                 this.categories = Category.parseRows((categoriesJson));
 
-                return this.accountService.observe((changes: Object[]) => {
+                const handler = (changes: Object[]) => {
                     this.accounts = Account.parseRows(changes.pop()['object']);
-                })
+                };
+
+                return this.accountService.observe(handler);
             })
             .subscribe((accountsJson) => {
                 this.accounts = Account.parseRows(accountsJson);

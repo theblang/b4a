@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DatabaseService } from '../common/database.service';
 import { LovefieldService } from '../common/lovefield.service';
+import { QueryState} from '../common/query-state.model';
 import { Account } from '../account/account.model';
 import * as lf from 'lf';
 
@@ -8,8 +10,7 @@ import * as lf from 'lf';
 export class AccountService {
     private database: lf.Database;
     private table: lf.schema.Table;
-    private query: lf.query.Select;
-    private handler: Function;
+    private queryStates: QueryState[] = [];
 
     constructor() { }
 
@@ -18,41 +19,46 @@ export class AccountService {
         this.table = database.getSchema().table(Account.TABLE_NAME);
     }
 
-    observe(handler, id?: number): Promise<Object[]> {
-        this.query = this.database
+    observe(handler: Function, id?: number): Observable<Object[]> {
+        const query = this.database
             .select()
             .from(this.table)
 
         if(id) {
-            this.query.where(this.table['id'].eq(id))
+            query.where(this.table['id'].eq(id))
         }
 
-        this.handler = handler;
-        this.database.observe(this.query, this.handler);
+        this.database.observe(query, handler);
+        this.queryStates.push({
+            query: query,
+            handler: handler
+        });
 
-        return this.query.exec();
+        return Observable.fromPromise(query.exec());
     }
 
-    unobserve() {
-        this.database.unobserve(this.query, this.handler);
+    unobserve(): void {
+        for (const [index, queryState] of this.queryStates.entries()) {
+            this.database.unobserve(queryState.query, queryState.handler);
+            this.queryStates.splice(index, 1);
+        }
     }
 
-    add(account: Account): void {
-        this.database
+    add(account: Account): Observable<Object[]> {
+        const query = this.database
             .insert()
             .into(this.table)
             .values([this.table.createRow(account.toRow())])
-            .exec()
-            .catch((reason) => {
-                console.error(reason.message);
-            })
+
+        return Observable.fromPromise(query.exec());
     }
 
-    remove(account: Account): Promise<Object[]> {
-        return this.database
+    remove(account: Account): Observable<Object[]> {
+        const query = this.database
             .delete()
             .from(this.table)
-            .where(this.table['id'].eq(account.id))
-            .exec();
+            .where(this.table['id'].eq(account.id));
+        
+        return Observable.fromPromise(query.exec());
     }
 }

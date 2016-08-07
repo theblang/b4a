@@ -35,7 +35,7 @@ export class TransactionService {
      * 
      * @return Observable containing a JSON array of Transactions
      */
-    observe(handler, id?: number, accountId?: number): Observable<Object[]> {
+    observe(handler: Function, id?: number, accountId?: number): Observable<Object[]> {
         const query = this.database
             .select()
             .from(this.table)
@@ -57,29 +57,28 @@ export class TransactionService {
         return Observable.fromPromise(query.exec());
     }
 
-    unobserve() {
+    unobserve(): void {
         for (const [index, query] of this.queries.entries()) {
             this.database.unobserve(query, this.handler);
             this.queries.splice(index, 1);
         }
     }
 
-    add(transaction: Transaction): void {
-        this.database
+    add(transaction: Transaction): Observable<Object[]> {
+        const query = this.database
             .insert()
             .into(this.table)
-            .values([this.table.createRow(transaction.toRow())])
-            .exec()
-            .catch((reason) => {
-                console.error(reason.message);
-            })
+            .values([this.table.createRow(transaction.toRow())]);
+
+        return Observable.fromPromise(query.exec());
     }
 
-    remove(transaction: Transaction): Promise<Object[]> {
-        return this.database
+    remove(transaction: Transaction): Observable<Object[]> {
+        const query = this.database
             .delete()
             .from(this.table)
-            .where(this.table['id'].eq(transaction.id))
-            .exec();
+            .where(this.table['id'].eq(transaction.id));
+
+        return Observable.fromPromise(query.exec());
     }
 }
