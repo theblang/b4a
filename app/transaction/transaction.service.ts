@@ -30,24 +30,22 @@ export class TransactionService {
      * immediately returns an Observable containing a JSON array of Transactions.
      * 
      * @handler Function to be called when changes are observed
-     * @id Optional id to specificy a specific Transaction
-     * @accountId Optional id to specify Transactions for a specific Account
-     * 
+     * @args Optional id or accountId
      * @return Observable containing a JSON array of Transactions
      */
-    observe(handler: Function, id?: number, accountId?: number): Observable<Object[]> {
+    observe(handler: Function, ...args): Observable<Object[]> {
         const query = this.database
             .select()
             .from(this.table)
             .leftOuterJoin(this.categoryTable, this.categoryTable['id'].eq(this.table['categoryId']))
             .leftOuterJoin(this.accountTable, this.accountTable['id'].eq(this.table['accountId']));
 
-        if (id) {
-            query.where(this.table['id'].eq(id));
+        if (args['id']) {
+            query.where(this.table['id'].eq(args['id']));
         }
 
-        if (accountId) {
-            query.where(this.table['accountId'].eq(accountId));
+        if (args['accountId']) {
+            query.where(this.table['accountId'].eq(args['accountId']));
         }
 
         this.handler = handler;

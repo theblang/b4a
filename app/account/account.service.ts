@@ -19,13 +19,13 @@ export class AccountService {
         this.table = database.getSchema().table(Account.TABLE_NAME);
     }
 
-    observe(handler: Function, id?: number): Observable<Object[]> {
+    observe(handler: Function, ...args): Observable<Object[]> {
         const query = this.database
             .select()
             .from(this.table)
 
-        if(id) {
-            query.where(this.table['id'].eq(id))
+        if(args['id']) {
+            query.where(this.table['id'].eq(args['id']))
         }
 
         this.database.observe(query, handler);
