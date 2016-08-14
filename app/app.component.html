@@ -1,4 +1,4 @@
-<h1>{{title}}</h1>
+<h1>{{appTitle}} - {{budgetTitle}}</h1>
 <nav>
     <a [routerLink]="['']">Dashboard</a>
     <a [routerLink]="['/accounts']">Accounts</a>
@@ -6,4 +6,9 @@
     <a [routerLink]="['/categories']">Categories</a>
     <!--<a [routerLink]="['/budgets']">Budgets</a>-->
 </nav>
+
+<select (change)="setActiveBudget($event.target.value)">
+    <option *ngFor="let budget of budgets">{{budget}}</option>
+</select>
+
 <router-outlet></router-outlet>

@@ -4,6 +4,7 @@ import * as _ from 'underscore';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountsComponent } from './account/accounts.component';
 import { AccountComponent } from './account/account.component';
+import { LocalStorageService } from './common/local-storage.service';
 import { DatabaseService } from './common/database.service';
 import { AccountService } from './account/account.service';
 import { BudgetService } from './budget/budget.service';
@@ -28,6 +29,7 @@ export const ROUTES: RouterConfig = [
     styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
+        LocalStorageService,
         DatabaseService,
         AccountService,
         BudgetService,
@@ -36,9 +38,23 @@ export const ROUTES: RouterConfig = [
     ]
 })
 export class AppComponent implements OnInit {
-    title = 'Budget 4 All'
+    public appTitle: string = 'Budget 4 All'
+    public budgetTitle: string = null;
+    public budgets: string[] = [];
 
-    constructor(private databaseService: DatabaseService, private router: Router) { }
+    constructor(
+        private localStorageService: LocalStorageService,
+        private databaseService: DatabaseService,
+        private budgetService: BudgetService,
+        private router: Router) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.budgets = this.localStorageService.getBudgets();
+        this.budgetTitle = this.localStorageService.getActiveBudget();
+        this.databaseService.connect();
+    }
+
+    setTargetBudget(budget: string): void {
+        this.localStorageService.setActiveBudget(budget);
+    }
 }

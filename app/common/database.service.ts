@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Transaction } from '../transaction/transaction.model';
 import { Category } from '../category/category.model';
 import { Account } from '../account/account.model';
+import { LocalStorageService } from '../common/local-storage.service';
 
 @Injectable()
 export class DatabaseService {
@@ -14,10 +15,12 @@ export class DatabaseService {
         storeType: lf.schema.DataStoreType.INDEXED_DB
     };
 
-    constructor() {
-        this.schemaBuilder = lf.schema.create('b4a', new Date().getTime()); // FIXME: Only do this in dev
+    constructor(private localStorageService: LocalStorageService) { }
 
-        this.schemaBuilder.createTable(Transaction.TABLE_NAME)
+    private createSchemaBuilder(name: string = 'b4a'): lf.schema.Builder {
+        const schemaBuilder = lf.schema.create(name, new Date().getTime()); // FIXME: Only do this in dev
+
+        schemaBuilder.createTable(Transaction.TABLE_NAME)
             .addColumn('id', lf.Type.INTEGER)
             .addColumn('amount', lf.Type.INTEGER)
             .addColumn('categoryId', lf.Type.INTEGER)
@@ -37,22 +40,25 @@ export class DatabaseService {
             .addNullable(['amount', 'categoryId'])
             .addPrimaryKey(['id'], true);
 
-        this.schemaBuilder.createTable(Category.TABLE_NAME)
+        schemaBuilder.createTable(Category.TABLE_NAME)
             .addColumn('id', lf.Type.INTEGER)
             .addColumn('allocated', lf.Type.INTEGER)
             .addColumn('name', lf.Type.STRING)
             .addNullable(['allocated', 'name'])
             .addPrimaryKey(['id'], true)
 
-        this.schemaBuilder.createTable(Account.TABLE_NAME)
+        schemaBuilder.createTable(Account.TABLE_NAME)
             .addColumn('id', lf.Type.INTEGER)
             .addColumn('name', lf.Type.STRING)
             .addNullable(['name'])
             .addPrimaryKey(['id'], true)
+
+        return schemaBuilder;
     }
 
-    connect(): Observable<lf.Database> {
-        if (!this.connectPromise) {
+    connect(force: boolean = false): Observable<lf.Database> {
+        if (!this.connectPromise || force) {
+            this.schemaBuilder = this.createSchemaBuilder()
             this.connectPromise = this.schemaBuilder.connect(this.options)
                 .then((database: lf.Database) => {
                     console.log('Database connected');
