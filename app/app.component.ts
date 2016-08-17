@@ -39,7 +39,7 @@ export const ROUTES: RouterConfig = [
 })
 export class AppComponent implements OnInit {
     public appTitle: string = 'Budget 4 All'
-    public budgetTitle: string = null;
+    public activeBudget: string = null;
     public budgets: string[] = [];
 
     constructor(
@@ -50,8 +50,8 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.budgets = this.localStorageService.getBudgets();
-        this.budgetTitle = this.localStorageService.getActiveBudget();
-        this.databaseService.connect();
+        this.activeBudget = this.localStorageService.getActiveBudget();
+        this.databaseService.connect();    
     }
 
     setTargetBudget(budget: string): void {
