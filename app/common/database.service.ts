@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import * as lf from 'lf';
-import { Observable } from 'rxjs';
-import { Transaction } from '../transaction/transaction.model';
-import { Category } from '../category/category.model';
-import { Account } from '../account/account.model';
-import { LocalStorageService } from '../common/local-storage.service';
+import {Injectable} from "@angular/core";
+import * as lf from "lf";
+import {Observable} from "rxjs";
+import {Transaction} from "../transaction/transaction.model";
+import {Category} from "../category/category.model";
+import {Account} from "../account/account.model";
+import {LocalStorageService} from "../common/local-storage.service";
 
 @Injectable()
 export class DatabaseService {
@@ -15,9 +15,10 @@ export class DatabaseService {
         storeType: lf.schema.DataStoreType.INDEXED_DB
     };
 
-    constructor(private localStorageService: LocalStorageService) { }
+    constructor(private localStorageService: LocalStorageService) {
+    }
 
-    private createSchemaBuilder(name: string): lf.schema.Builder {
+    private createSchemaBuilder(name: string = 'b4a'): lf.schema.Builder {
         const schemaBuilder = lf.schema.create(name, new Date().getTime()); // FIXME: Only do this in dev
 
         schemaBuilder.createTable(Transaction.TABLE_NAME)
@@ -63,7 +64,7 @@ export class DatabaseService {
         if (!this.connectPromise || force) {
             const activeBudget = this.localStorageService.getActiveBudget();
             if (!activeBudget) {
-                throw 'No active budget available';
+                //throw 'No active budget available';
             }
             this.schemaBuilder = this.createSchemaBuilder(activeBudget);
 

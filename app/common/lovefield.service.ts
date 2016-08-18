@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+import {Observable} from "rxjs";
+import * as lf from "lf";
 
 export interface LovefieldService {
     init(database: lf.Database): void;

@@ -1,11 +1,11 @@
-import { LovefieldModel } from '../common/lovefield.model';
+import {LovefieldModel} from "../common/lovefield.model";
 
 export class Account implements LovefieldModel {
     public static TABLE_NAME = 'accounts';
 
-    constructor(
-        public name: string,
-        public id?: number) { }
+    constructor(public name: string,
+                public id?: number) {
+    }
 
     toRow(): Object {
         const row = Object.assign({}, this);

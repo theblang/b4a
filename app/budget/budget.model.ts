@@ -1,12 +1,9 @@
-import { Category } from '../category/category.model';
-
 export class Budget {
-    
-    constructor(
-        public name: string,
-        public categories: Object = null,
-        public $key?: string
-    ) { }
+
+    constructor(public name: string,
+                public categories: Object = null,
+                public $key?: string) {
+    }
 
     toJSON() {
         const copy = Object.assign({}, this);

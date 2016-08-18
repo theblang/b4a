@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { DatabaseService } from '../common/database.service';
-import { CategoryService } from './category.service';
-import { Category } from './category.model';
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {DatabaseService} from "../common/database.service";
+import {CategoryService} from "./category.service";
+import {Category} from "./category.model";
 
 @Component({
     selector: 'categories',
@@ -10,9 +10,9 @@ import { Category } from './category.model';
 export class CategoriesComponent implements OnInit, OnDestroy {
     public categories: Category[];
 
-    constructor(
-        private databaseService: DatabaseService,
-        private categoryService: CategoryService) { }
+    constructor(private databaseService: DatabaseService,
+                private categoryService: CategoryService) {
+    }
 
     ngOnInit() {
         this.databaseService.connect()

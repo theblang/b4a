@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CHART_DIRECTIVES } from 'ng2-charts';
-import { DatabaseService } from '../common/database.service';
-import { CategoryService } from '../category/category.service';
-import { Category } from '../category/category.model';
-import { Transaction } from '../transaction/transaction.model';
-import { TransactionService } from '../transaction/transaction.service';
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {CHART_DIRECTIVES} from "ng2-charts";
+import {DatabaseService} from "../common/database.service";
+import {CategoryService} from "../category/category.service";
+import {Category} from "../category/category.model";
+import {Transaction} from "../transaction/transaction.model";
+import {TransactionService} from "../transaction/transaction.service";
 
 @Component({
     selector: 'dashboard',
@@ -20,10 +20,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public data: number[] = [];
     public type: string = 'doughnut';
 
-    constructor(
-        private databaseService: DatabaseService,
-        private categoryService: CategoryService,
-        private transactionService: TransactionService) { }
+    constructor(private databaseService: DatabaseService,
+                private categoryService: CategoryService,
+                private transactionService: TransactionService) {
+    }
 
     ngOnInit() {
         this.databaseService.connect()
@@ -38,13 +38,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .flatMap((transactionsJson) => {
                 this.transactions = Transaction.parseRows(transactionsJson);
 
-                    return this.categoryService.observe((changes: Object[]) => {
-                        this.categories = Category.parseRows(changes.pop()['object']);
-                    })
+                return this.categoryService.observe((changes: Object[]) => {
+                    this.categories = Category.parseRows(changes.pop()['object']);
+                })
             })
             .subscribe((categoriesJson) => {
-                    this.categories = Category.parseRows(categoriesJson);
-                    this.buildSpendingChart(this.categories, this.transactions);
+                this.categories = Category.parseRows(categoriesJson);
+                this.buildSpendingChart(this.categories, this.transactions);
             });
     }
 

@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DatabaseService } from '../common/database.service';
-import { LovefieldService } from '../common/lovefield.service';
-import { QueryState} from '../common/query-state.model';
-import { Account } from '../account/account.model';
-import * as lf from 'lf';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {QueryState} from "../common/query-state.model";
+import {Account} from "../account/account.model";
+import * as lf from "lf";
 
 @Injectable()
 export class AccountService {
@@ -12,7 +10,8 @@ export class AccountService {
     private table: lf.schema.Table;
     private queryStates: QueryState[] = [];
 
-    constructor() { }
+    constructor() {
+    }
 
     init(database: lf.Database) {
         this.database = database;
@@ -24,7 +23,7 @@ export class AccountService {
             .select()
             .from(this.table)
 
-        if(args['id']) {
+        if (args['id']) {
             query.where(this.table['id'].eq(args['id']))
         }
 
@@ -58,7 +57,7 @@ export class AccountService {
             .delete()
             .from(this.table)
             .where(this.table['id'].eq(account.id));
-        
+
         return Observable.fromPromise(query.exec());
     }
 }

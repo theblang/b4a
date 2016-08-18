@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import * as lf from 'lf';
-import { DatabaseService } from '../common/database.service';
-import { LovefieldService } from '../common/lovefield.service';
-import { Category } from '../category/category.model';
-import { QueryState } from '../common/query-state.model';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import * as lf from "lf";
+import {Category} from "../category/category.model";
+import {QueryState} from "../common/query-state.model";
 
 @Injectable()
 export class CategoryService {
@@ -12,7 +10,8 @@ export class CategoryService {
     private table: lf.schema.Table;
     private queryStates: QueryState[] = [];
 
-    constructor() { }
+    constructor() {
+    }
 
     init(database: lf.Database) {
         this.database = database;

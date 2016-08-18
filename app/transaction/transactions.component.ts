@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DatabaseService } from '../common/database.service';
-import { TransactionService } from './transaction.service';
-import { AccountService } from '../account/account.service';
-import { CategoryService } from '../category/category.service';
-import { Transaction } from './transaction.model';
-import { Account } from '../account/account.model';
-import { Category } from '../category/category.model';
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {DatabaseService} from "../common/database.service";
+import {TransactionService} from "./transaction.service";
+import {AccountService} from "../account/account.service";
+import {CategoryService} from "../category/category.service";
+import {Transaction} from "./transaction.model";
+import {Account} from "../account/account.model";
+import {Category} from "../category/category.model";
 
 @Component({
     selector: 'transactions',
@@ -17,11 +17,11 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     public accounts: Account[];
     public now: number;
 
-    constructor(
-        private databaseService: DatabaseService,
-        private transactionService: TransactionService,
-        private categoryService: CategoryService,
-        private accountService: AccountService) { }
+    constructor(private databaseService: DatabaseService,
+                private transactionService: TransactionService,
+                private categoryService: CategoryService,
+                private accountService: AccountService) {
+    }
 
     ngOnInit() {
         this.now = Date.now();

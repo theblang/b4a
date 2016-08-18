@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { DatabaseService } from '../common/database.service';
-import { AccountService } from './account.service';
-import { Account } from './account.model';
+import {Component, OnInit} from "@angular/core";
+import {ROUTER_DIRECTIVES} from "@angular/router";
+import {DatabaseService} from "../common/database.service";
+import {AccountService} from "./account.service";
+import {Account} from "./account.model";
 
 @Component({
     selector: 'accounts',
@@ -12,9 +12,9 @@ import { Account } from './account.model';
 export class AccountsComponent implements OnInit {
     public accounts: Account[];
 
-    constructor(
-        private databaseService: DatabaseService,
-        private accountService: AccountService) { }
+    constructor(private databaseService: DatabaseService,
+                private accountService: AccountService) {
+    }
 
     ngOnInit() {
         this.databaseService.connect()

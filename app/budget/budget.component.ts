@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Budget } from './budget.model';
-import { BudgetService } from './budget.service';
-import { Category } from '../category/category.model';
+import {Component, Input, OnInit} from "@angular/core";
+import {Budget} from "./budget.model";
+import {BudgetService} from "./budget.service";
 
 @Component({
     selector: 'budget',
@@ -13,7 +12,8 @@ export class BudgetComponent implements OnInit {
     public hasChanges: boolean;
     private originalBudget: Budget;
 
-    constructor(private budgetService: BudgetService) { }
+    constructor(private budgetService: BudgetService) {
+    }
 
     ngOnInit() {
         this.originalBudget = new Budget(this.budgetJson.name, this.budgetJson.categories, this.budgetJson.$key);

@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DatabaseService } from '../common/database.service';
-import { AccountService } from './account.service';
-import { TransactionService } from '../transaction/transaction.service';
-import { Account } from './account.model';
-import { Transaction } from '../transaction/transaction.model';
-import { Observable} from 'rxjs';
-import 'rxjs/add/operator/take';
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {DatabaseService} from "../common/database.service";
+import {AccountService} from "./account.service";
+import {TransactionService} from "../transaction/transaction.service";
+import {Account} from "./account.model";
+import {Transaction} from "../transaction/transaction.model";
+import "rxjs/add/operator/take";
 
 @Component({
     selector: 'account',
@@ -17,11 +16,11 @@ export class AccountComponent implements OnInit, OnDestroy {
     public accountId: number;
     public transactions: Transaction[];
 
-    constructor(
-        private route: ActivatedRoute,
-        private databaseService: DatabaseService,
-        private accountService: AccountService,
-        private transactionService: TransactionService) { }
+    constructor(private route: ActivatedRoute,
+                private databaseService: DatabaseService,
+                private accountService: AccountService,
+                private transactionService: TransactionService) {
+    }
 
     ngOnInit() {
         this.route.params

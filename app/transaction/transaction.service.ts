@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DatabaseService } from '../common/database.service';
-import { LovefieldService } from '../common/lovefield.service';
-import { Transaction } from './transaction.model';
-import { Category } from '../category/category.model';
-import { Account } from '../account/account.model';
-import * as lf from 'lf';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {DatabaseService} from "../common/database.service";
+import {Transaction} from "./transaction.model";
+import {Category} from "../category/category.model";
+import {Account} from "../account/account.model";
+import * as lf from "lf";
 
 @Injectable()
 export class TransactionService {
@@ -16,7 +15,8 @@ export class TransactionService {
     private queries: lf.query.Select[] = [];
     private handler: Function;
 
-    constructor(private databaseService: DatabaseService) { }
+    constructor(private databaseService: DatabaseService) {
+    }
 
     init(database: lf.Database) {
         this.database = database;
@@ -28,7 +28,7 @@ export class TransactionService {
     /**
      * Configures a handler function to observe changes to the database and
      * immediately returns an Observable containing a JSON array of Transactions.
-     * 
+     *
      * @handler Function to be called when changes are observed
      * @args Optional id or accountId
      * @return Observable containing a JSON array of Transactions
