@@ -12,14 +12,7 @@ import {CategoryService} from "./category/category.service";
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
-    providers: [
-        LocalStorageService,
-        DatabaseService,
-        AccountService,
-        BudgetService,
-        TransactionService,
-        CategoryService
-    ]
+    providers: []
 })
 export class AppComponent implements OnInit {
     public appTitle: string = 'Budget 4 All'

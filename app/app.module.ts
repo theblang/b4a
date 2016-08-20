@@ -10,6 +10,14 @@ import {AccountComponent} from "./account/account.component";
 import {BudgetsComponent} from "./budget/budgets.component";
 import {TransactionsComponent} from "./transaction/transactions.component";
 import {CategoriesComponent} from "./category/categories.component";
+import {BudgetSelectComponent} from "./budget/budget-select.component";
+import {BudgetGuard} from "./app.budget-guard.service";
+import {CategoryService} from "./category/category.service";
+import {TransactionService} from "./transaction/transaction.service";
+import {BudgetService} from "./budget/budget.service";
+import {AccountService} from "./account/account.service";
+import {DatabaseService} from "./common/database.service";
+import {LocalStorageService} from "./common/local-storage.service";
 
 @NgModule({
     imports: [
@@ -25,9 +33,18 @@ import {CategoriesComponent} from "./category/categories.component";
         AccountComponent,
         BudgetsComponent,
         TransactionsComponent,
-        CategoriesComponent
+        CategoriesComponent,
+        BudgetSelectComponent
     ],
-    providers: [appRoutingProviders],
+    providers: [
+        appRoutingProviders,
+        BudgetGuard,
+        LocalStorageService,
+        DatabaseService,
+        AccountService,
+        BudgetService,
+        TransactionService,
+        CategoryService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

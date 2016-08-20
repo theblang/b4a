@@ -1,0 +1,10 @@
+<div>
+    <h2>Budget</h2>
+
+    <ul *ngIf="budgets">
+        <li *ngFor="let budget of budgets">
+            <span>{{budget}}</span>
+            <button (click)="setActiveBudget(budget)">Set Active</button>
+        </li>
+    </ul>
+</div>

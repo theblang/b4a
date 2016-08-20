@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export class Budget {
 
     constructor(public name: string,
