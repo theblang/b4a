@@ -6,20 +6,22 @@ export class LocalStorageService {
     }
 
     getBudgets(): string[] {
-        return window.localStorage.getItem('budgets') || [];
+        const budgets = JSON.parse(window.localStorage.getItem('budgets')) || [];
+        return budgets;
     }
 
     addBudget(budget: string): string[] {
-        const budgets = window.localStorage.getItem('budgets') || [];
+        const budgets = this.getBudgets();
         budgets.push(budget);
+        window.localStorage.setItem('budgets', JSON.stringify(budgets));
         return budgets;
     }
 
     getActiveBudget(): string {
-        return window.localStorage.getItem('active_budget');
+        return JSON.parse(window.localStorage.getItem('active_budget'));
     }
 
     setActiveBudget(name: string): void {
-        window.localStorage.setItem('active_budget', name);
+        window.localStorage.setItem('active_budget', JSON.stringify(name));
     }
 }

@@ -17,6 +17,30 @@ export class DatabaseService {
 
     constructor(private localStorageService: LocalStorageService) {}
 
+    /**
+     * @throws Will throw an error if active_budget not found in local storage
+     */
+    connect(force: boolean = false): Observable<lf.Database> {
+        if (!this.connectPromise || force) {
+            const activeBudget = this.localStorageService.getActiveBudget();
+            if (!activeBudget) {
+                //throw 'No active budget available';
+            }
+            this.schemaBuilder = this.createSchemaBuilder(activeBudget);
+
+            this.connectPromise = this.schemaBuilder.connect(this.options)
+                .then((database: lf.Database) => {
+                    console.log('Database connected');
+                    this.database = database;
+                    return this.database;
+                }).catch((reason) => {
+                    console.error(reason);
+                });
+        }
+
+        return Observable.fromPromise(this.connectPromise);
+    }
+
     private createSchemaBuilder(name: string): lf.schema.Builder {
         const schemaBuilder = lf.schema.create(name, new Date().getTime()); // FIXME: Only do this in dev
 
@@ -54,29 +78,5 @@ export class DatabaseService {
             .addPrimaryKey(['id'], true)
 
         return schemaBuilder;
-    }
-
-    /**
-     * @throws Will throw an error if active_budget not found in local storage
-     */
-    connect(force: boolean = false): Observable<lf.Database> {
-        if (!this.connectPromise || force) {
-            const activeBudget = this.localStorageService.getActiveBudget();
-            if (!activeBudget) {
-                //throw 'No active budget available';
-            }
-            this.schemaBuilder = this.createSchemaBuilder(activeBudget);
-
-            this.connectPromise = this.schemaBuilder.connect(this.options)
-                .then((database: lf.Database) => {
-                    console.log('Database connected');
-                    this.database = database;
-                    return this.database;
-                }).catch((reason) => {
-                    console.error(reason);
-                });
-        }
-
-        return Observable.fromPromise(this.connectPromise);
     }
 }

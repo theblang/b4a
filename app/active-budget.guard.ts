@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {LocalStorageService} from "./common/local-storage.service";
 
 @Injectable()
-export class BudgetGuard implements CanActivate {
+export class ActiveBudgetGuard implements CanActivate {
 
     constructor(private router: Router, private localStorageService: LocalStorageService) {}
 

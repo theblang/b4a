@@ -17,8 +17,13 @@ export class BudgetSelectComponent implements OnInit {
         this.budgets = this.localStorageService.getBudgets();
     }
 
+    addBudget(budget) {
+        this.localStorageService.addBudget(budget);
+        this.budgets = this.localStorageService.getBudgets();
+    }
+
     setActiveBudget(budget) {
         this.localStorageService.setActiveBudget(budget);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
     }
 }
