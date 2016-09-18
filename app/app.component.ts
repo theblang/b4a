@@ -4,9 +4,7 @@ import {LocalStorageService} from "./common/local-storage.service";
 @Component({
     selector: 'app',
     templateUrl: 'app/app.component.html',
-    styleUrls: ['app/app.component.css'],
-    directives: [],
-    providers: []
+    styleUrls: ['app/app.component.css']
 })
 export class AppComponent implements OnInit {
     public appTitle: string = 'Budget 4 All';

@@ -1,15 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {ROUTER_DIRECTIVES} from "@angular/router";
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {DatabaseService} from "../common/database.service";
 import {AccountService} from "./account.service";
 import {Account} from "./account.model";
 
 @Component({
     selector: 'accounts',
-    templateUrl: 'app/account/accounts.component.html',
-    directives: [ROUTER_DIRECTIVES]
+    templateUrl: 'app/account/accounts.component.html'
 })
-export class AccountsComponent implements OnInit {
+export class AccountsComponent implements OnInit, OnDestroy {
     public accounts: Account[];
 
     constructor(private databaseService: DatabaseService,

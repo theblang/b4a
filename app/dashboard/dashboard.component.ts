@@ -1,5 +1,4 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
-import {CHART_DIRECTIVES} from "ng2-charts";
 import {DatabaseService} from "../common/database.service";
 import {CategoryService} from "../category/category.service";
 import {Category} from "../category/category.model";
@@ -9,8 +8,7 @@ import {TransactionService} from "../transaction/transaction.service";
 @Component({
     selector: 'dashboard',
     templateUrl: 'app/dashboard/dashboard.component.html',
-    styleUrls: ['app/dashboard/dashboard.component.css'],
-    directives: [CHART_DIRECTIVES]
+    styleUrls: ['app/dashboard/dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     public categories: Category[];
