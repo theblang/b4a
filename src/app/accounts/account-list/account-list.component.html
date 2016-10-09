@@ -1,0 +1,17 @@
+<budget-nav></budget-nav>
+
+<div>
+    <h2>Accounts</h2>
+
+    <input type="text" #name>
+    <button (click)="addAccount(name.value)">Add</button>
+
+    <ul *ngIf="accounts">
+        <li *ngFor='let account of accounts; let i = index;'>
+            <a [routerLink]="['/account', account.id]">
+                <span>{{account.name}}</span>
+            </a>
+            <button (click)="removeAccount(i)">Delete</button>
+        </li>
+    </ul>
+</div>

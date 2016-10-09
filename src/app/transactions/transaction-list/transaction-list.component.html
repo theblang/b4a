@@ -1,0 +1,38 @@
+<budget-nav></budget-nav>
+
+<div>
+    <h2>Transactions</h2>
+
+    <input type="number" value="5" #amount>
+    <input type="text" value="test payee" #payee>
+    <input type="date" value="1999-01-31" #date>
+    <input type="text" value="test memo" #memo>
+    <select #categoryIndex>
+        <option *ngFor="let category of categories; let i = index;" [value]="i">{{category.name}}</option>
+    </select>
+    <select #accountIndex>
+        <option *ngFor="let account of accounts; let i = index;" [value]="i">{{account.name}}</option>
+    </select>
+    <button (click)="addTransaction(amount.value, categoryIndex.value, accountIndex.value)">Add Transaction</button>
+
+    <table border="1">
+        <tr>
+            <th>Amount</th>
+            <th>Payee</th>
+            <th>Date</th>
+            <th>Memo</th>
+            <th>Category</th>
+            <th>Account</th>
+        </tr>
+
+        <tr *ngFor="let transaction of transactions">
+            <td>{{transaction.amount}}</td>
+            <td>{{transaction.payee}}</td>
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.memo}}</td>
+            <td>{{transaction.category.name}}</td>
+            <td>{{transaction.account.name}}</td>
+            <td><button (click)="removeTransaction(transaction)">Delete</button></td>
+        </tr>
+    </table>
+</div>

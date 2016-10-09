@@ -1,0 +1,13 @@
+<div>
+    <h2>Budget Select</h2>
+
+    <input #budget>
+    <button (click)="addBudget(budget.value)">Add</button>
+
+    <ul *ngIf="budgets">
+        <li *ngFor="let budget of budgets; trackBy: index">
+            <span>{{budget}}</span>
+            <button (click)="setActiveBudget(budget)">Set Active</button>
+        </li>
+    </ul>
+</div>
