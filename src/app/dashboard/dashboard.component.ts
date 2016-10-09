@@ -6,7 +6,7 @@ import {CategoryService} from '../categories/shared/category.service';
 import {TransactionService} from '../transactions/shared/transaction.service';
 
 @Component({
-    selector: 'dashboard',
+    selector: 'b4a-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })
@@ -31,14 +31,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
                 return this.transactionService.observe((changes: Object[]) => {
                     this.transactions = Transaction.parseRows(changes.pop()['object']);
-                })
+                });
             })
             .flatMap((transactionsJson) => {
                 this.transactions = Transaction.parseRows(transactionsJson);
 
                 return this.categoryService.observe((changes: Object[]) => {
                     this.categories = Category.parseRows(changes.pop()['object']);
-                })
+                });
             })
             .subscribe((categoriesJson) => {
                 this.categories = Category.parseRows(categoriesJson);

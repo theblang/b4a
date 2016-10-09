@@ -4,7 +4,7 @@ import {DatabaseService} from '../../shared/database.service';
 import {CategoryService} from '../shared/category.service';
 
 @Component({
-    selector: 'category-list',
+    selector: 'b4a-category-list',
     templateUrl: './category-list.component.html',
     styleUrls: ['./category-list.component.css']
 })

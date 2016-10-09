@@ -7,7 +7,7 @@ import {AccountService} from '../shared/account.service';
 import {TransactionService} from '../../transactions/shared/transaction.service';
 
 @Component({
-    selector: 'app-account-detail',
+    selector: 'b4a-account-detail',
     templateUrl: './account-detail.component.html',
     styleUrls: ['./account-detail.component.css']
 })

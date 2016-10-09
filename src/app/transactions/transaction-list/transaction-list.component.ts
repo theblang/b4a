@@ -8,7 +8,7 @@ import {CategoryService} from '../../categories/shared/category.service';
 import {AccountService} from '../../accounts/shared/account.service';
 
 @Component({
-  selector: 'app-transaction-list',
+  selector: 'b4a-transaction-list',
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.css']
 })

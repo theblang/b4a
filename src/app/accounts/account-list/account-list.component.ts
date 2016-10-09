@@ -4,7 +4,7 @@ import {AccountService} from '../shared/account.service';
 import {Account} from '../shared/account.model';
 
 @Component({
-    selector: 'app-account-list',
+    selector: 'b4a-account-list',
     templateUrl: './account-list.component.html',
     styleUrls: ['./account-list.component.css']
 })

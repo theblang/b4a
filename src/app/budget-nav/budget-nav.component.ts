@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LocalStorageService} from '../shared/local-storage.service';
 
 @Component({
-    selector: 'budget-nav',
+    selector: 'b4a-budget-nav',
     templateUrl: 'budget-nav.component.html',
     styleUrls: ['budget-nav.component.css']
 })

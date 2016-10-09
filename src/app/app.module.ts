@@ -39,7 +39,7 @@ import {TransactionService} from './transactions/shared/transaction.service';
             {path: 'account/:id', component: AccountDetailComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'transactions', component: TransactionListComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'categories', component: CategoryListComponent, canActivate: [ActiveBudgetGuard]},
-            {path: 'budget-select', component: BudgetSelectComponent}
+            {path: 'b4a-budget-select', component: BudgetSelectComponent}
         ])
     ],
     providers: [

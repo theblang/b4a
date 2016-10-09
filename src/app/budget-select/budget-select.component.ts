@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {LocalStorageService} from '../shared/local-storage.service';
 
 @Component({
-    selector: 'budget-select',
+    selector: 'b4a-budget-select',
     templateUrl: 'budget-select.component.html',
     styleUrls: ['budget-select.component.css']
 })
