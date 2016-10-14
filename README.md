@@ -1,10 +1,13 @@
 # B4a
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.14.
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.17.
 
 ## Set up WebStorm
-- http://stackoverflow.com/a/39585549/1747491
-- http://stackoverflow.com/a/38480501/1747491
+- [Configure auto-format to change double quotes to single quotes](http://stackoverflow.com/a/38480501/1747491)
+- [Allow Jasmine methods to be recognized](http://stackoverflow.com/a/39585549/1747491)
+
+## Additional tools
+- [npm-check-updates](https://github.com/tjunnone/npm-check-updates) -- Scan project dependencies for updates
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -33,4 +36,3 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
