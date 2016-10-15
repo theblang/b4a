@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, NgZone} from '@angular/core';
 import {Transaction} from '../shared/transaction.model';
 import {Category} from '../../categories/shared/category.model';
 import {Account} from '../../accounts/shared/account.model';
@@ -8,9 +8,9 @@ import {CategoryService} from '../../categories/shared/category.service';
 import {AccountService} from '../../accounts/shared/account.service';
 
 @Component({
-  selector: 'b4a-transaction-list',
-  templateUrl: './transaction-list.component.html',
-  styleUrls: ['./transaction-list.component.css']
+    selector: 'b4a-transaction-list',
+    templateUrl: './transaction-list.component.html',
+    styleUrls: ['./transaction-list.component.css']
 })
 export class TransactionListComponent implements OnInit, OnDestroy {
     public transactions: Transaction[];
@@ -21,7 +21,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     constructor(private databaseService: DatabaseService,
                 private transactionService: TransactionService,
                 private categoryService: CategoryService,
-                private accountService: AccountService) {
+                private accountService: AccountService,
+                private ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -33,28 +34,40 @@ export class TransactionListComponent implements OnInit, OnDestroy {
                 this.categoryService.init(database);
                 this.accountService.init(database);
 
-                return this.transactionService.observe((changes: Object[]) => {
-                    this.transactions = Transaction.parseRows(changes.pop()['object']);
-                });
+                const handler = (changes: Object[]) => {
+                    this.ngZone.run(() => {
+                        this.transactions = Transaction.parseRows(changes.pop()['object']);
+                    });
+                };
+
+                return this.transactionService.observe(handler);
             })
             .flatMap((transactionsJson) => {
                 this.transactions = Transaction.parseRows((transactionsJson));
 
-                return this.categoryService.observe((changes: Object[]) => {
-                    this.categories = Category.parseRows(changes.pop()['object']);
-                });
+                const handler = (changes: Object[]) => {
+                    this.ngZone.run(() => {
+                        this.categories = Category.parseRows(changes.pop()['object']);
+                    });
+                };
+
+                return this.categoryService.observe(handler);
             })
             .flatMap((categoriesJson) => {
                 this.categories = Category.parseRows((categoriesJson));
 
                 const handler = (changes: Object[]) => {
-                    this.accounts = Account.parseRows(changes.pop()['object']);
+                    this.ngZone.run(() => {
+                        this.accounts = Account.parseRows(changes.pop()['object']);
+                    });
                 };
 
                 return this.accountService.observe(handler);
             })
             .subscribe((accountsJson) => {
-                this.accounts = Account.parseRows(accountsJson);
+                this.ngZone.run(() => {
+                    this.accounts = Account.parseRows(accountsJson);
+                });
             });
     }
 

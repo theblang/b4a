@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, NgZone} from '@angular/core';
 import {DatabaseService} from '../../shared/database.service';
 import {AccountService} from '../shared/account.service';
 import {Account} from '../shared/account.model';
@@ -12,7 +12,8 @@ export class AccountListComponent implements OnInit, OnDestroy {
     public accounts: Account[];
 
     constructor(private databaseService: DatabaseService,
-                private accountService: AccountService) {
+                private accountService: AccountService,
+                private ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -21,13 +22,17 @@ export class AccountListComponent implements OnInit, OnDestroy {
                 this.accountService.init(database);
 
                 const handler = (changes: Object[]) => {
-                    this.accounts = Account.parseRows(changes.pop()['object']);
+                    this.ngZone.run(() => {
+                        this.accounts = Account.parseRows(changes.pop()['object']);
+                    });
                 };
 
                 return this.accountService.observe(handler);
             })
             .subscribe((accountsJson) => {
-                this.accounts = Account.parseRows((accountsJson));
+                this.ngZone.run(() => {
+                    this.accounts = Account.parseRows((accountsJson));
+                });
             });
     }
 

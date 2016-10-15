@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, NgZone} from '@angular/core';
 import {Category} from '../shared/category.model';
 import {DatabaseService} from '../../shared/database.service';
 import {CategoryService} from '../shared/category.service';
@@ -12,7 +12,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     public categories: Category[];
 
     constructor(private databaseService: DatabaseService,
-                private categoryService: CategoryService) {
+                private categoryService: CategoryService,
+                private ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -21,13 +22,17 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                 this.categoryService.init(database);
 
                 const handler = (changes: Object[]) => {
-                    this.categories = Category.parseRows(changes.pop()['object']);
+                    this.ngZone.run(() => {
+                        this.categories = Category.parseRows(changes.pop()['object']);
+                    });
                 };
 
                 return this.categoryService.observe(handler);
             })
             .subscribe((categoriesJson) => {
-                this.categories = Category.parseRows((categoriesJson));
+                this.ngZone.run(() => {
+                    this.categories = Category.parseRows((categoriesJson));
+                });
             });
     }
 
