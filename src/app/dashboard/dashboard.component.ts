@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, NgZone} from '@angular/core';
 import {Category} from '../categories/shared/category.model';
 import {Transaction} from '../transactions/shared/transaction.model';
 import {DatabaseService} from '../shared/database.service';
@@ -20,7 +20,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     constructor(private databaseService: DatabaseService,
                 private categoryService: CategoryService,
-                private transactionService: TransactionService) {
+                private transactionService: TransactionService,
+                private ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -29,20 +30,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.transactionService.init(database);
                 this.categoryService.init(database);
 
-                return this.transactionService.observe((changes: Object[]) => {
-                    this.transactions = Transaction.parseRows(changes.pop()['object']);
-                });
+                const handler = (changes: Object[]) => {
+                    this.ngZone.run(() => {
+                        this.transactions = Transaction.parseRows(changes.pop()['object']);
+                    });
+                };
+
+                return this.transactionService.observe(handler);
             })
             .flatMap((transactionsJson) => {
-                this.transactions = Transaction.parseRows(transactionsJson);
-
-                return this.categoryService.observe((changes: Object[]) => {
-                    this.categories = Category.parseRows(changes.pop()['object']);
+                this.ngZone.run(() => {
+                    this.transactions = Transaction.parseRows(transactionsJson);
                 });
+
+                const handler = (changes: Object[]) => {
+                    this.ngZone.run(() => {
+                        this.categories = Category.parseRows(changes.pop()['object']);
+                    });
+                };
+
+                return this.categoryService.observe(handler);
             })
             .subscribe((categoriesJson) => {
-                this.categories = Category.parseRows(categoriesJson);
-                this.buildSpendingChart(this.categories, this.transactions);
+                this.ngZone.run(() => {
+                    this.categories = Category.parseRows(categoriesJson);
+                    this.buildSpendingChart(this.categories, this.transactions);
+                });
             });
     }
 

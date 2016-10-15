@@ -19,6 +19,9 @@ import {ActiveBudgetGuard} from './shared/active-budget.guard';
 import {AccountService} from './accounts/shared/account.service';
 import {TransactionService} from './transactions/shared/transaction.service';
 
+import 'chart.js';
+import {ChartsModule} from 'ng2-charts';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -40,7 +43,8 @@ import {TransactionService} from './transactions/shared/transaction.service';
             {path: 'transactions', component: TransactionListComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'categories', component: CategoryListComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'b4a-budget-select', component: BudgetSelectComponent}
-        ])
+        ]),
+        ChartsModule
     ],
     providers: [
         DatabaseService,
