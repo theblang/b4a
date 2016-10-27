@@ -11,7 +11,7 @@ export class ActiveBudgetGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
         if (!this.localStorageService.getActiveBudget()) {
-            this.router.navigate(['/b4a-root-budget-select']);
+            this.router.navigate(['/budget-select']);
             return false;
         }
 

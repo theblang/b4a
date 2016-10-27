@@ -1,7 +1,12 @@
-<h1>{{activeBudget}}</h1>
+<h1>
+    <span>{{activeBudget}}</span>
+    <a routerLink="/budget-select">
+        <button>Change</button>
+    </a>
+</h1>
 <nav>
-    <a [routerLink]="['']">Dashboard</a>
-    <a [routerLink]="['/accounts']">Accounts</a>
-    <a [routerLink]="['/transactions']">Transactions</a>
-    <a [routerLink]="['/categories']">Categories</a>
+    <a routerLink="">Dashboard</a>
+    <a routerLink="/accounts">Accounts</a>
+    <a routerLink="/transactions">Transactions</a>
+    <a routerLink="/categories">Categories</a>
 </nav>

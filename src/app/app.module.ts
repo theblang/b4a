@@ -42,7 +42,7 @@ import {ChartsModule} from 'ng2-charts';
             {path: 'account/:id', component: AccountDetailComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'transactions', component: TransactionListComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'categories', component: CategoryListComponent, canActivate: [ActiveBudgetGuard]},
-            {path: 'b4a-budget-select', component: BudgetSelectComponent}
+            {path: 'budget-select', component: BudgetSelectComponent}
         ]),
         ChartsModule
     ],
