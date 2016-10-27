@@ -36,3 +36,7 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Credits
+
+Favicon created by [Delwar Hossain](https://thenounproject.com/delwar/) from Noun Project. Color changed from black to `#27ae60` and aspect ratio changed to be square.
