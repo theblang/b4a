@@ -22,6 +22,7 @@ import {TransactionService} from './transactions/shared/transaction.service';
 import 'chart.js';
 import {ChartsModule} from 'ng2-charts';
 import {MaterialModule} from "@angular/material";
+import {TranslateModule} from "ng2-translate";
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import {MaterialModule} from "@angular/material";
             {path: 'budget-select', component: BudgetSelectComponent}
         ]),
         MaterialModule.forRoot(),
+        TranslateModule.forRoot(),
         ChartsModule
     ],
     providers: [

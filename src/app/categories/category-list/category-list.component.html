@@ -3,7 +3,7 @@
 <div>
     <h2>Category</h2>
 
-    <md-input #name placeholder="Category name" id="new-category"></md-input>
+    <md-input #name placeholder="{{'CATEGORY_LIST.CATEGORY_NAME' | translate}}" id="new-category"></md-input>
     <button (click)="addCategory(name.value)" md-raised-button md-tooltip="Add a new category" id="add-category">Add</button>
 
     <ul *ngIf="categories">
