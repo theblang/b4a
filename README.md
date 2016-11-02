@@ -7,7 +7,8 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 - [Allow Jasmine methods to be recognized](http://stackoverflow.com/a/39585549/1747491)
 
 ## Additional tools
-- [npm-check-updates](https://github.com/tjunnone/npm-check-updates) -- Scan project dependencies for updates
+- [npm-check](https://github.com/dylang/npm-check) -- Scan and update project dependencies from command line
+- [npm-check-updates](https://github.com/tjunnone/npm-check-updates) -- Scan and update project dependencies from command line
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
