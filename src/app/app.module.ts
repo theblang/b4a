@@ -21,6 +21,7 @@ import {TransactionService} from './transactions/shared/transaction.service';
 
 import 'chart.js';
 import {ChartsModule} from 'ng2-charts';
+import {MaterialModule} from "@angular/material";
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import {ChartsModule} from 'ng2-charts';
             {path: 'categories', component: CategoryListComponent, canActivate: [ActiveBudgetGuard]},
             {path: 'budget-select', component: BudgetSelectComponent}
         ]),
+        MaterialModule.forRoot(),
         ChartsModule
     ],
     providers: [

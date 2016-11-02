@@ -3,8 +3,8 @@
 <div>
     <h2>Category</h2>
 
-    <input #name type="text" id="new-category">
-    <button (click)="addCategory(name.value)" id="add-category">Add</button>
+    <md-input #name placeholder="Category name" id="new-category"></md-input>
+    <button (click)="addCategory(name.value)" md-raised-button md-tooltip="Add a new category" id="add-category">Add</button>
 
     <ul *ngIf="categories">
         <li *ngFor="let category of categories">
