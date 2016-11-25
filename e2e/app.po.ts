@@ -1,4 +1,4 @@
-import { browser, element, by } from 'protractor/globals';
+import { browser, element, by } from 'protractor';
 
 export class B4aPage {
   navigateTo() {
@@ -6,6 +6,6 @@ export class B4aPage {
   }
 
   getParagraphText() {
-    return element(by.css('b4a-root h1')).getText();
+    return element(by.css('app-root h1')).getText();
   }
 }

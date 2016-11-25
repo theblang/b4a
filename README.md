@@ -1,6 +1,6 @@
-# B4a
+# B4A
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.17.
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
 
 ## Set up WebStorm
 - [Configure auto-format to change double quotes to single quotes](http://stackoverflow.com/a/38480501/1747491)
