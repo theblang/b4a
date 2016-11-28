@@ -1,5 +1,35 @@
-<!-- Global menu will go here -->
+<md-sidenav-layout>
+    <md-sidenav #start>
+        <button md-button (click)="openBudgetSelect()">Change Budget</button>
+    </md-sidenav>
 
-<router-outlet></router-outlet>
+    <md-toolbar color="primary">
+        <button md-button (click)="start.open()">
+            <i class="material-icons">menu</i>
+        </button>
+        <span>B4A</span>
+    </md-toolbar>
 
-<!-- Global footer will go here -->
+    <md-tab-group>
+        <md-tab label="Transactions">
+            <div class="tab-content">
+                <b4a-transaction-list></b4a-transaction-list>
+            </div>
+        </md-tab>
+        <md-tab label="Dashboard">
+            <div class="tab-content">
+                <b4a-dashboard></b4a-dashboard>
+            </div>
+        </md-tab>
+        <md-tab label="Accounts">
+            <div class="tab-content">
+                <b4a-account-list></b4a-account-list>
+            </div>
+        </md-tab>
+        <md-tab label="Categories">
+            <div class="tab-content">
+                <b4a-category-list></b4a-category-list>
+            </div>
+        </md-tab>
+    </md-tab-group>
+</md-sidenav-layout>
